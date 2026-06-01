@@ -1,22 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//Gemaakt door Tristan
 
-namespace DataAccessLayer.Models
+namespace DataAccessLayer.Models;
+
+public class Order
 {
-    public class Order
-    {
-        public int Id { get; set; }
-
-        public DateTime OrderDate { get; set; }
-
-        public int CustomerId { get; set; }
-        
-        public Customer Customer { get; set; } = null!;
-
-        public ICollection<Product> Products { get; } = new List<Product>();
-    }
+    public int OrderId { get; set; }
+    public DateTime OrderDate { get; set; }
+    public int OrderStatusId { get; set; }
+    public int PaymentStatusId { get; set; }
+    public decimal ShippingCosts { get; set; }
+    public int CustomerId { get; set; }
+    public int ShippingAddressId { get; set; }
 }

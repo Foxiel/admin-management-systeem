@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using DataAccessLayer.Models;
 using DataAccessLayer.Repositories;
 
-namespace KE03_INTDEV_SE_2_Base
+namespace KE03_INTDEV_SE_2_Base.Controllers
 {
     public class CustomersController : Controller
     {
