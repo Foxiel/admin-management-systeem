@@ -1,9 +1,13 @@
 ﻿//Gemaakt door Tristan
 
+using System.ComponentModel.DataAnnotations;
+
 namespace DataAccessLayer.Models;
 
 public class Address
 {
+    [Key]
+
     public int AddressId { get; set; }
     public int CustomerId { get; set; }
     public string Street { get; set; } = string.Empty;

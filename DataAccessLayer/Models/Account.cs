@@ -1,9 +1,12 @@
 ﻿//Gemaakt door Tristan
 
+using System.ComponentModel.DataAnnotations;
+
 namespace DataAccessLayer.Models;
 
 public class Account
 {
+    [Key]
     public int AccountId { get; set; }
     public string Username { get; set; } = string.Empty;
     public string PasswordHash { get; set; } = string.Empty;
