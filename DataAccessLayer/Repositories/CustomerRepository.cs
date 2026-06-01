@@ -15,7 +15,7 @@ namespace DataAccessLayer.Repositories
 
         public async Task<IEnumerable<Customer>> GetAllAsync()
         {
-            const string sql = "SELECT klant_nummer, klant_naam, klant_email FROM klant";
+            const string sql = "SELECT klant_nummer, klant_naam, klant_email, klant_telefoon FROM klant";
             var customers = new List<Customer>();
 
             await using var connection = (SqlConnection)GetConnection();
@@ -32,7 +32,10 @@ namespace DataAccessLayer.Repositories
                     Name = reader.GetString(reader.GetOrdinal("klant_naam")),
                     Email = reader.IsDBNull(reader.GetOrdinal("klant_email"))
                         ? null
-                        : reader.GetString(reader.GetOrdinal("klant_email"))
+                        : reader.GetString(reader.GetOrdinal("klant_email")),
+                    Telefoonnr = reader.IsDBNull(reader.GetOrdinal("klant_telefoon"))
+                        ? null
+                        : reader.GetString(reader.GetOrdinal("klant_telefoon"))
                 });
             }
 
@@ -42,7 +45,7 @@ namespace DataAccessLayer.Repositories
         public async Task<Customer?> GetByIdAsync(int id)
         {
             const string sql = @"
-                SELECT klant_nummer, klant_naam, klant_email
+                SELECT klant_nummer, klant_naam, klant_email, klant_telefoon
                 FROM klant
                 WHERE klant_nummer = @Id";
 
@@ -60,8 +63,11 @@ namespace DataAccessLayer.Repositories
                     Id = reader.GetInt32(reader.GetOrdinal("klant_nummer")),
                     Name = reader.GetString(reader.GetOrdinal("klant_naam")),
                     Email = reader.IsDBNull(reader.GetOrdinal("klant_email"))
-                        ? null
-                        : reader.GetString(reader.GetOrdinal("klant_email"))
+        ? null
+        : reader.GetString(reader.GetOrdinal("klant_email")),
+                    Telefoonnr = reader.IsDBNull(reader.GetOrdinal("klant_telefoon"))
+        ? null
+        : reader.GetString(reader.GetOrdinal("klant_telefoon"))
                 };
             }
 
@@ -71,8 +77,8 @@ namespace DataAccessLayer.Repositories
         public async Task AddAsync(Customer customer)
         {
             const string sql = @"
-                INSERT INTO klant (klant_naam, klant_email)
-                VALUES (@Name, @Email);
+                INSERT INTO klant (klant_naam, klant_email, klant_telefoon)
+                VALUES (@Name, @Email,@Telefoonnr);
                 SELECT CAST(SCOPE_IDENTITY() AS int);";
 
             await using var connection = (SqlConnection)GetConnection();
@@ -81,6 +87,7 @@ namespace DataAccessLayer.Repositories
             await using var command = new SqlCommand(sql, connection);
             command.Parameters.AddWithValue("@Name", customer.Name ?? (object)DBNull.Value);
             command.Parameters.AddWithValue("@Email", customer.Email ?? (object)DBNull.Value);
+            command.Parameters.AddWithValue("@Telefoonnr", (object?)customer.Telefoonnr ?? DBNull.Value);
 
             var result = await command.ExecuteScalarAsync();
             if (result != null && int.TryParse(result.ToString(), out var newId))
@@ -94,7 +101,8 @@ namespace DataAccessLayer.Repositories
             const string sql = @"
                 UPDATE klant
                 SET klant_naam = @Name,
-                    klant_email = @Email
+                klant_email = @Email,
+                klant_telefoon = @Telefoonnr
                 WHERE klant_nummer = @Id";
 
             await using var connection = (SqlConnection)GetConnection();
@@ -104,8 +112,10 @@ namespace DataAccessLayer.Repositories
             command.Parameters.AddWithValue("@Id", customer.Id);
             command.Parameters.AddWithValue("@Name", customer.Name ?? (object)DBNull.Value);
             command.Parameters.AddWithValue("@Email", customer.Email ?? (object)DBNull.Value);
+            command.Parameters.AddWithValue("@Telefoonnr",(object?)customer.Telefoonnr ?? DBNull.Value);
 
             await command.ExecuteNonQueryAsync();
+            Console.WriteLine(customer.Telefoonnr);
         }
 
         public async Task DeleteAsync(int id)

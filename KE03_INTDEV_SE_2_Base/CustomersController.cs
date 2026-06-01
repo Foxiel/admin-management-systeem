@@ -41,7 +41,7 @@ namespace KE03_INTDEV_SE_2_Base
         // POST: Customers/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Email")] Customer customer)
+        public async Task<IActionResult> Create([Bind("Id,Name,Email,Telefoonnr")] Customer customer)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +65,7 @@ namespace KE03_INTDEV_SE_2_Base
         // POST: Customers/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email")] Customer customer)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,Telefoonnr")] Customer customer)
         {
             if (id != customer.Id) return NotFound();
 
