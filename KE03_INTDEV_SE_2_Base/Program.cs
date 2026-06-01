@@ -1,5 +1,4 @@
 using DataAccessLayer;
-using DataAccessLayer.Interfaces;
 using DataAccessLayer.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,8 +10,13 @@ namespace KE03_INTDEV_SE_2_Base
         {
             var builder = WebApplication.CreateBuilder(args);
             
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-            builder.Services.AddDbContext<MatrixIncDbContext>(options => options.UseSqlServer(connectionString));
+            builder.Configuration.GetConnectionString("Connection");
+            
+            builder.Services.AddScoped<DataAccessLayer.Repositories.CustomerRepository>();
+
+            builder.Services.AddControllersWithViews();
+            
+            builder.Services.AddAuthorization();
 
             var app = builder.Build();
 
@@ -22,16 +26,6 @@ namespace KE03_INTDEV_SE_2_Base
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
-            }
-
-            // Zorg ervoor dat de database is aangemaakt en gevuld met testdata
-            using (var scope = app.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
-
-                var context = services.GetRequiredService<MatrixIncDbContext>();
-                context.Database.EnsureCreated();
-                MatrixIncDbInitializer.Initialize(context);
             }
 
             app.UseHttpsRedirection();
