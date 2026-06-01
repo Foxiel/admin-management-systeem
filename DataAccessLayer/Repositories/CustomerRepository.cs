@@ -1,49 +1,124 @@
-﻿using DataAccessLayer.Interfaces;
-using DataAccessLayer.Models;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using DataAccessLayer.Models;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 
 namespace DataAccessLayer.Repositories
 {
-    public class CustomerRepository : ICustomerRepository
+    public class CustomerRepository : BaseDAL
     {
-        private readonly MatrixIncDbContext _context;
-
-        public CustomerRepository(MatrixIncDbContext context)
+        public CustomerRepository(IConfiguration configuration) : base(configuration)
         {
-            _context = context;
         }
 
-        public void AddCustomer(Customer customer)
+        public async Task<IEnumerable<Customer>> GetAllAsync()
         {
-            _context.Customers.Add(customer);
-            _context.SaveChanges();
+            const string sql = "SELECT klant_nummer, klant_naam, klant_email FROM klant";
+            var customers = new List<Customer>();
+
+            await using var connection = (SqlConnection)GetConnection();
+            await connection.OpenAsync();
+
+            await using var command = new SqlCommand(sql, connection);
+            await using var reader = await command.ExecuteReaderAsync();
+
+            while (await reader.ReadAsync())
+            {
+                customers.Add(new Customer
+                {
+                    Id = reader.GetInt32(reader.GetOrdinal("klant_nummer")),
+                    Name = reader.GetString(reader.GetOrdinal("klant_naam")),
+                    Email = reader.IsDBNull(reader.GetOrdinal("klant_email"))
+                        ? null
+                        : reader.GetString(reader.GetOrdinal("klant_email"))
+                });
+            }
+
+            return customers;
         }
 
-        public void DeleteCustomer(Customer customer)
+        public async Task<Customer?> GetByIdAsync(int id)
         {
-            _context.Customers.Remove(customer);
-            _context.SaveChanges();
+            const string sql = @"
+                SELECT klant_nummer, klant_naam, klant_email
+                FROM klant
+                WHERE klant_nummer = @Id";
+
+            await using var connection = (SqlConnection)GetConnection();
+            await connection.OpenAsync();
+
+            await using var command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@Id", id);
+
+            await using var reader = await command.ExecuteReaderAsync();
+            if (await reader.ReadAsync())
+            {
+                return new Customer
+                {
+                    Id = reader.GetInt32(reader.GetOrdinal("klant_nummer")),
+                    Name = reader.GetString(reader.GetOrdinal("klant_naam")),
+                    Email = reader.IsDBNull(reader.GetOrdinal("klant_email"))
+                        ? null
+                        : reader.GetString(reader.GetOrdinal("klant_email"))
+                };
+            }
+
+            return null;
         }
 
-        public IEnumerable<Customer> GetAllCustomers()
+        public async Task AddAsync(Customer customer)
         {
-            return _context.Customers.Include(c => c.Orders);
+            const string sql = @"
+                INSERT INTO klant (klant_naam, klant_email)
+                VALUES (@Name, @Email);
+                SELECT CAST(SCOPE_IDENTITY() AS int);";
+
+            await using var connection = (SqlConnection)GetConnection();
+            await connection.OpenAsync();
+
+            await using var command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@Name", customer.Name ?? (object)DBNull.Value);
+            command.Parameters.AddWithValue("@Email", customer.Email ?? (object)DBNull.Value);
+
+            var result = await command.ExecuteScalarAsync();
+            if (result != null && int.TryParse(result.ToString(), out var newId))
+            {
+                customer.Id = newId;
+            }
         }
 
-        public Customer? GetCustomerById(int id)
+        public async Task UpdateAsync(Customer customer)
         {
-            return _context.Customers.Include(c => c.Orders).FirstOrDefault(c => c.Id == id);
+            const string sql = @"
+                UPDATE klant
+                SET klant_naam = @Name,
+                    klant_email = @Email
+                WHERE klant_nummer = @Id";
+
+            await using var connection = (SqlConnection)GetConnection();
+            await connection.OpenAsync();
+
+            await using var command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@Id", customer.Id);
+            command.Parameters.AddWithValue("@Name", customer.Name ?? (object)DBNull.Value);
+            command.Parameters.AddWithValue("@Email", customer.Email ?? (object)DBNull.Value);
+
+            await command.ExecuteNonQueryAsync();
         }
 
-        public void UpdateCustomer(Customer customer)
+        public async Task DeleteAsync(int id)
         {
-            _context.Customers.Update(customer);
-            _context.SaveChanges();
+            const string sql = "DELETE FROM klant WHERE klant_nummer = @Id";
+
+            await using var connection = (SqlConnection)GetConnection();
+            await connection.OpenAsync();
+
+            await using var command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@Id", id);
+
+            await command.ExecuteNonQueryAsync();
         }
     }
 }
