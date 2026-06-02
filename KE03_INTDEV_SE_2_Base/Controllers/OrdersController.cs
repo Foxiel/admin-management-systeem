@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using KE03_INTDEV_SE_2_Base.Models;
+using DataAccessLayer.Models;
+using DataAccessLayer.Repositories;
+
 
 public class OrdersController : Controller
 {

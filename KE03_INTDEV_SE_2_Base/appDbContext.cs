@@ -5,7 +5,9 @@ public class appDbContext(DbContextOptions<appDbContext> options) : DbContext(op
 {
     public DbSet<DataAccessLayer.Models.Product> Product { get; set; } = default!;
 
-public DbSet<DataAccessLayer.Models.Account> Account { get; set; } = default!;
+    public DbSet<DataAccessLayer.Models.Account> Account { get; set; } = default!;
 
-public DbSet<DataAccessLayer.Models.Address> Address { get; set; } = default!;
+    public DbSet<DataAccessLayer.Models.Address> Address { get; set; } = default!;
+
+    public DbSet<DataAccessLayer.Models.Order> Order { get; set; } = default!;
 }

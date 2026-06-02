@@ -2,7 +2,7 @@
 
 namespace KE03_INTDEV_SE_2_Base.Models
 {
-    public class Order
+    public class OrderModel
     {
         [Key]
         public int OrderId { get; set; }
