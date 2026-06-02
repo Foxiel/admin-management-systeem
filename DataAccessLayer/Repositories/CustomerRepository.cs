@@ -115,7 +115,6 @@ namespace DataAccessLayer.Repositories
             command.Parameters.AddWithValue("@Telefoonnr",(object?)customer.Telefoonnr ?? DBNull.Value);
 
             await command.ExecuteNonQueryAsync();
-            Console.WriteLine(customer.Telefoonnr);
         }
 
         public async Task DeleteAsync(int id)
