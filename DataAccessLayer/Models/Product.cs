@@ -7,8 +7,6 @@ namespace DataAccessLayer.Models;
 
 public class Product
 {
-    [Key]
-    [Required]
     public int ProductId { get; set; }
     public string ProductEAN { get; set; } = string.Empty;
     public string ProductName { get; set; } = string.Empty;

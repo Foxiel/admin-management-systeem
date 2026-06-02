@@ -6,8 +6,6 @@ namespace DataAccessLayer.Models;
 
 public class Address
 {
-    [Key]
-
     public int AddressId { get; set; }
     public int CustomerId { get; set; }
     public string Street { get; set; } = string.Empty;

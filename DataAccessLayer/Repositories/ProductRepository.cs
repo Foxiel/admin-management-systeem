@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories
 {
-    public class ProductsRepository : BaseDAL
+    public class ProductRepository : BaseDAL
     {
-        public ProductsRepository(IConfiguration configuration) : base(configuration)
+        public ProductRepository(IConfiguration configuration) : base(configuration)
         {
         }
 

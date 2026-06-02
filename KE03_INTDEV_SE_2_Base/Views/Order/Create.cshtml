@@ -1,0 +1,72 @@
+@model KE03_INTDEV_SE_2_Base.Models.Order
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Order</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="OrderDatum" class="control-label"></label>
+                <input asp-for="OrderDatum" class="form-control" />
+                <span asp-validation-for="OrderDatum" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="OrderStatus" class="control-label"></label>
+                <input asp-for="OrderStatus" class="form-control" />
+                <span asp-validation-for="OrderStatus" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="BetaalStatus" class="control-label"></label>
+                <input asp-for="BetaalStatus" class="form-control" />
+                <span asp-validation-for="BetaalStatus" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Verzendkosten" class="control-label"></label>
+                <input asp-for="Verzendkosten" class="form-control" />
+                <span asp-validation-for="Verzendkosten" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="TotaalBedrag" class="control-label"></label>
+                <input asp-for="TotaalBedrag" class="form-control" />
+                <span asp-validation-for="TotaalBedrag" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="KlantId" class="control-label"></label>
+                <input asp-for="KlantId" class="form-control" />
+                <span asp-validation-for="KlantId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ProductId" class="control-label"></label>
+                <input asp-for="ProductId" class="form-control" />
+                <span asp-validation-for="ProductId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Aantal" class="control-label"></label>
+                <input asp-for="Aantal" class="form-control" />
+                <span asp-validation-for="Aantal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
