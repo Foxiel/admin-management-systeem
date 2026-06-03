@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DataAccessLayer.Models;
 using DataAccessLayer.Repositories;
@@ -15,11 +16,32 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
         }
 
         // GET: Customers
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
+            ViewData["CurrentFilter"] = searchString;
+
             var customers = await _repository.GetAllAsync();
+
             return View(customers);
         }
+        [HttpGet]
+        public async Task<IActionResult> Search(string term)
+        {
+            var customers = await _repository.GetAllAsync();
+
+            if (!string.IsNullOrWhiteSpace(term))
+            {
+                customers = customers.Where(c =>
+                    (c.Name != null && c.Name.Contains(term)) ||
+                    (c.Email != null && c.Email.Contains(term)) ||
+                    (c.Telefoonnr != null && c.Telefoonnr.Contains(term))
+                ).ToList();
+            }
+
+            return Json(customers);
+        }
+
+
 
         // GET: Customers/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -48,6 +70,7 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
                 await _repository.AddAsync(customer);
                 return RedirectToAction(nameof(Index));
             }
+
             return View(customer);
         }
 
@@ -74,6 +97,7 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
                 await _repository.UpdateAsync(customer);
                 return RedirectToAction(nameof(Index));
             }
+
             return View(customer);
         }
 

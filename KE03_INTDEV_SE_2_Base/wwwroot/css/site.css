@@ -96,7 +96,7 @@ a {
     color: #00ff41;
     border-color: #00ff41;
     width: 100%;
-    table-layout: auto;
+    table-layout: fixed;
 }
 
     .table th {
@@ -113,6 +113,10 @@ a {
             width: 220px;
             white-space: nowrap;
         }
+
+td, th {
+    vertical-align: middle;
+}
 
 /* Navbar */
 
@@ -337,6 +341,7 @@ a {
     padding: 6px 10px;
 }
 
+
 /* keep strictly square only for icon-only buttons */
 .crud-icon-btn.icon-only {
     width: 42px;
@@ -388,6 +393,7 @@ a {
     border-radius: 8px;
     border: 1px solid #00ff66;
     color: #00ff66;
+    background-color: transparent;
 }
 
     .details-link:hover {
@@ -470,3 +476,37 @@ a {
             box-shadow: 0 0 15px rgba(255, 0, 0, 0.5) !important;
         }
 
+/*search*/
+.crud-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-input {
+    width: 250px;
+    padding: 8px 12px;
+    border: 1px solid #00ff41;
+    border-radius: 5px;
+    background: #111;
+    color: #00ff41;
+    outline: none;
+}
+
+    .search-input:focus {
+        box-shadow: 0 0 8px #00ff41;
+    }
