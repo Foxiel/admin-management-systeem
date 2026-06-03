@@ -383,6 +383,37 @@ a {
         stroke: white !important;
     }
 
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-box {
+    background: #111;
+    border: 1px solid #00ff41;
+    padding: 25px;
+    border-radius: 10px;
+    width: 350px;
+    text-align: center;
+    color: #00ff41;
+    box-shadow: 0 0 20px #00ff41;
+}
+
+.modal-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
 /* DETAILS */
 
 
@@ -475,6 +506,31 @@ a {
             border-color: var(--main-color) !important;
             box-shadow: 0 0 15px rgba(255, 0, 0, 0.5) !important;
         }
+
+
+
+
+    /* ========================================= */
+    /* DELETE MODAL OVERRIDE */
+    /* ========================================= */
+
+    .angry-mode .modal-box {
+        border-color: var(--matrix-red) !important;
+        color: var(--matrix-red) !important;
+        background: #0a0000 !important;
+        box-shadow: 0 0 25px rgba(255,0,0,1) !important;
+    }
+
+        .angry-mode .modal-box h2 {
+            color: var(--matrix-red) !important;
+            text-shadow: 0 0 10px var(--matrix-red) !important;
+        }
+
+        .angry-mode .modal-box p {
+            color: white !important;
+        }
+
+
 
 /*search*/
 .crud-header {

@@ -45,14 +45,13 @@
 
         </dl>
 
-        <form asp-action="Delete">
+        <form asp-action="Delete" id="deleteForm">
 
             <input type="hidden" asp-for="Id" />
 
-            <input type="submit"
-                   value="Delete"
-                   class="btn btn-danger" />
-
+            <button type="button" class="btn btn-danger" onclick="openModal()">
+                Delete
+            </button>
             |
 
             <a asp-action="Index" class="details-link">
@@ -63,4 +62,24 @@
 
     </div>
 
+</div>
+@* delate popup *@
+<div id="deleteModal" class="modal-overlay">
+    <div class="modal-box angry-mode">
+
+        <h2>Weet je het zeker?</h2>
+        <p>Deze klant wordt permanent verwijderd.</p>
+
+        <div class="modal-actions">
+
+            <button type="button" class="details-link" onclick="closeModal()">
+                Cancel
+            </button>
+
+            <button type="button" class="btn btn-danger" onclick="confirmDelete()">
+                Delete
+            </button>
+
+        </div>
+    </div>
 </div>

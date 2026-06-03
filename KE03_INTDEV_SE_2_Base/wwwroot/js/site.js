@@ -69,3 +69,18 @@ searchInput.addEventListener("input", function () {
 
     }, 200);
 });
+
+function openModal() {
+    const modal = document.getElementById("deleteModal");
+    if (modal) modal.style.display = "flex";
+}
+
+function closeModal() {
+    const modal = document.getElementById("deleteModal");
+    if (modal) modal.style.display = "none";
+}
+
+function confirmDelete() {
+    const form = document.getElementById("deleteForm");
+    if (form) form.submit();
+}
