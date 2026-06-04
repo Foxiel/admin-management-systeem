@@ -1,4 +1,3 @@
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using KE03_INTDEV_SE_2_Base.Models;
@@ -16,7 +15,7 @@ public class OrdersController : Controller
     }
 
     // GET: ORDERS
-    public async Task<IActionResult> Index()    
+    public async Task<IActionResult> Index()
     {
         return View(await _context.Order.ToListAsync());
     }

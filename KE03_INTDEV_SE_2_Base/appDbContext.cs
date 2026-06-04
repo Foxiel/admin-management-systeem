@@ -10,4 +10,5 @@ public class appDbContext(DbContextOptions<appDbContext> options) : DbContext(op
     public DbSet<DataAccessLayer.Models.DeliveryAddress> Address { get; set; } = default!;
 
     public DbSet<DataAccessLayer.Models.Order> Order { get; set; } = default!;
+    public DbSet<KE03_INTDEV_SE_2_Base.Models.LeverancierModel> LeverancierModel { get; set; } = default!;
 }
