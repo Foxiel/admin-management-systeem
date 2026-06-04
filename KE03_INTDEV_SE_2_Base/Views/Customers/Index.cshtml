@@ -11,14 +11,14 @@
     <div class="crud-header">
 
         <div class="header-left">
-            <h1>Customers</h1>
+            <h1>Klanten</h1>
 
             <a asp-action="Create" class="details-link create-link">
                 <svg class="icon-svg plus-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" fill="none" />
                     <path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                 </svg>
-                Create New
+                Nieuwe Klant
             </a>
         </div>
 
@@ -26,7 +26,7 @@
             <input type="text"
                    id="customerSearch"
                    class="search-input"
-                   placeholder="Search customers..." />
+                   placeholder="Zoeken in klanten..." />
         </form>
 
     </div>
@@ -40,7 +40,7 @@
                     <th>@Html.DisplayNameFor(m => m.First().Name)</th>
                     <th>@Html.DisplayNameFor(m => m.First().Email)</th>
                     <th>@Html.DisplayNameFor(m => m.First().Telefoonnr)</th>
-                    <th>Actions</th>
+                    <th>Acties</th>
                 </tr>
             </thead>
 
