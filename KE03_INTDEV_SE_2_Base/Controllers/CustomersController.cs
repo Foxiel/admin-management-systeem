@@ -18,7 +18,7 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
         // GET: Customers
         public async Task<IActionResult> Index(string searchString)
         {
-            ViewData["CurrentFilter"] = searchString;
+   
 
             var customers = await _repository.GetAllAsync();
 

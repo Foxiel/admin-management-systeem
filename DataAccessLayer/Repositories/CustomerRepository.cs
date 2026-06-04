@@ -15,7 +15,7 @@ namespace DataAccessLayer.Repositories
 
         public async Task<IEnumerable<Customer>> GetAllAsync()
         {
-            const string sql = "SELECT klant_nummer, klant_naam, klant_email, klant_telefoon FROM klant";
+            const string sql = "SELECT klant_nummer, klant_naam, klant_email, klant_telefoon FROM klant ORDER BY klant_naam";
             var customers = new List<Customer>();
 
             await using var connection = (SqlConnection)GetConnection();
