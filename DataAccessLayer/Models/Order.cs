@@ -1,14 +1,16 @@
 ﻿//Gemaakt door Tristan
+//Aangepast door Fabian, velden aangepast en vertaald
+
+using System.ComponentModel.DataAnnotations;
 
 namespace DataAccessLayer.Models;
 
 public class Order
 {
-    public int OrderId { get; set; }
-    public DateTime OrderDate { get; set; }
-    public int OrderStatusId { get; set; }
-    public int PaymentStatusId { get; set; }
-    public decimal ShippingCosts { get; set; }
-    public int CustomerId { get; set; }
-    public int ShippingAddressId { get; set; }
+    [Key]
+    public int Id { get; set; }
+    public Customer Klant { get; set; }
+    public List<Product> Producten { get; set; }
+    public DateTime BestelDatum { get; set; }
+    public string BestelStatus { get; set; }
 }

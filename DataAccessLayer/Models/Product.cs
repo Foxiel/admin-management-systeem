@@ -1,25 +1,19 @@
 ﻿//Gemaakt door Tristan
+//Aangepast door Fabian, velden aangepast en vertaald
 
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 
 namespace DataAccessLayer.Models;
 
 public class Product
 {
-    public int ProductId { get; set; }
-    public string ProductEAN { get; set; } = string.Empty;
-    public string ProductName { get; set; } = string.Empty;
-    public string? ProductDescription { get; set; }
-    public string? ProductSpecification { get; set; }
-    public decimal ProductPrice { get; set; }
-    public int ProductStock { get; set; }
-    public decimal ProductWeightKg { get; set; }
-    public int ProductWarrantyMonths { get; set; }
-    public DateTime ProductReleaseDate { get; set; }
-    public string ManufacturerId { get; set; } = string.Empty;
-    public string SubcategoryId { get; set; } = string.Empty;
-    public string? ImageUrl { get; set; }
-
-
+    [Key]
+    public string EAN { get; set; } = string.Empty;
+    public Manufacturer Leverancier { get; set; }
+    public Location Locatie { get; set; }
+    public string Naam { get; set; }
+    public string Beschrijving { get; set; }
+    public decimal Prijs { get; set; }
+    public decimal Gewicht { get; set; }
+    public string Garantie { get; set; }
 }

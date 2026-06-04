@@ -1,3 +1,5 @@
+//Gemaakt door Fabian
+
 using DataAccessLayer.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
@@ -25,8 +27,8 @@ public class CategoryRespository : BaseDAL
         {
             categories.Add(new Category
             {
-                CategoryId = reader.GetString(reader.GetOrdinal("categorie_id")),
-                CategoryName = reader.GetString(reader.GetOrdinal("categorie_naam"))
+                Id = reader.GetString(reader.GetOrdinal("categorie_id")),
+                Naam = reader.GetString(reader.GetOrdinal("categorie_naam"))
             });
         } 
         await connection.CloseAsync();
@@ -49,8 +51,8 @@ public class CategoryRespository : BaseDAL
         {
             return new Category
             {
-                CategoryId = reader.GetString(reader.GetOrdinal("categorie_id")),
-                CategoryName = reader.GetString(reader.GetOrdinal("categorie_naam"))
+                Id = reader.GetString(reader.GetOrdinal("categorie_id")),
+                Naam = reader.GetString(reader.GetOrdinal("categorie_naam"))
             };
         }
 
@@ -65,8 +67,8 @@ public class CategoryRespository : BaseDAL
         await connection.OpenAsync();
         
         await using var command = new SqlCommand(sql, connection);
-        command.Parameters.AddWithValue("@id", category.CategoryId);
-        command.Parameters.AddWithValue("@name", category.CategoryName);
+        command.Parameters.AddWithValue("@id", category.Id);
+        command.Parameters.AddWithValue("@name", category.Naam);
         
         await command.ExecuteNonQueryAsync();
     }
@@ -79,8 +81,8 @@ public class CategoryRespository : BaseDAL
         await connection.OpenAsync();
         
         await using var command = new SqlCommand(sql, connection);
-        command.Parameters.AddWithValue("@id", category.CategoryId);
-        command.Parameters.AddWithValue("@name", category.CategoryName);
+        command.Parameters.AddWithValue("@id", category.Id);
+        command.Parameters.AddWithValue("@name", category.Naam);
         
         await command.ExecuteNonQueryAsync();
     }

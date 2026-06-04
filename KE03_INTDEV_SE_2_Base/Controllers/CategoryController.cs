@@ -1,3 +1,5 @@
+// Gemaakt door Fabian
+
 using DataAccessLayer.Models;
 using DataAccessLayer.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -55,7 +57,7 @@ public class CategoryController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(string id, [Bind("CategoryId, CategoryName")] Category category)
     {
-        if (id != category.CategoryId) return NotFound();
+        if (id != category.Id) return NotFound();
 
         if (ModelState.IsValid)
         {

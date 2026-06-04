@@ -1,4 +1,5 @@
 ﻿//Gemaakt door Tristan
+//Aangepast door Fabian, velden aangepast en vertaald
 
 using System.ComponentModel.DataAnnotations;
 
@@ -6,12 +7,10 @@ namespace DataAccessLayer.Models;
 
 public class Account
 {
-    public int AccountId { get; set; }
-    public string Username { get; set; } = string.Empty;
-    public string PasswordHash { get; set; } = string.Empty;
-    public string Role { get; set; } = string.Empty;
-    public bool IsActive { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime? LastLogin { get; set; }
-    public int CustomerId { get; set; }
+    [Key]
+    public int Id { get; set; }
+    public Customer Klant { get; set; }
+    public string Gebruikersnaam { get; set; } = string.Empty;
+    public string WachtwoordHash { get; set; } = string.Empty;
+    public string Rol { get; set; } = string.Empty;
 }

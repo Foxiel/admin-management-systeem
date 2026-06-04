@@ -1,4 +1,6 @@
-﻿@model IEnumerable<DataAccessLayer.Models.Customer>
+﻿@* Aangepast door Fabian, Namen van het model aangepast *@
+
+@model IEnumerable<DataAccessLayer.Models.Customer>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,7 +15,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.Naam)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Email)
@@ -28,7 +30,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => item.Naam)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Email)

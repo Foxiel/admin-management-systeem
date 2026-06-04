@@ -30,7 +30,7 @@ public class OrdersController : Controller
         }
 
         var order = await _context.Order
-            .FirstOrDefaultAsync(m => m.OrderId == orderid);
+            .FirstOrDefaultAsync(m => m.Id == orderid);
         if (order == null)
         {
             return NotFound();
@@ -84,7 +84,7 @@ public class OrdersController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int? orderid, [Bind("OrderId,OrderDatum,OrderStatus,BetaalStatus,Verzendkosten,TotaalBedrag,KlantId,ProductId,Aantal")] Order order)
     {
-        if (orderid != order.OrderId)
+        if (orderid != order.Id)
         {
             return NotFound();
         }
@@ -98,7 +98,7 @@ public class OrdersController : Controller
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OrderExists(order.OrderId))
+                if (!OrderExists(order.Id))
                 {
                     return NotFound();
                 }
@@ -121,7 +121,7 @@ public class OrdersController : Controller
         }
 
         var order = await _context.Order
-            .FirstOrDefaultAsync(m => m.OrderId == orderid);
+            .FirstOrDefaultAsync(m => m.Id == orderid);
         if (order == null)
         {
             return NotFound();
@@ -147,6 +147,6 @@ public class OrdersController : Controller
 
     private bool OrderExists(int? orderid)
     {
-        return _context.Order.Any(e => e.OrderId == orderid);
+        return _context.Order.Any(e => e.Id == orderid);
     }
 }
