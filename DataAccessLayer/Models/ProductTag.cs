@@ -1,9 +1,13 @@
 ﻿//Gemaakt door Tristan
 
+using System.ComponentModel.DataAnnotations;
+
 namespace DataAccessLayer.Models;
 
 public class ProductTag
 {
-    public string ProductEAN { get; set; } = string.Empty;
-    public string TagId { get; set; } = string.Empty;
+    [Key]
+    public int Id { get; set; }
+    public string Naam { get; set; }
+    public Product Product { get; set; }
 }

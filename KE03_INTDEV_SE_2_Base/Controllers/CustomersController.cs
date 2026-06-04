@@ -32,7 +32,7 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
             if (!string.IsNullOrWhiteSpace(term))
             {
                 customers = customers.Where(c =>
-                    (c.Name != null && c.Name.Contains(term)) ||
+                    (c.Naam != null && c.Naam.Contains(term)) ||
                     (c.Email != null && c.Email.Contains(term)) ||
                     (c.Telefoonnr != null && c.Telefoonnr.Contains(term))
                 ).ToList();
@@ -63,7 +63,7 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
         // POST: Customers/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Email,Telefoonnr")] Customer customer)
+        public async Task<IActionResult> Create([Bind("Id,Naam,Email,Telefoonnr")] Customer customer)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
         // POST: Customers/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,Telefoonnr")] Customer customer)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Naam,Email,Telefoonnr")] Customer customer)
         {
             if (id != customer.Id) return NotFound();
 

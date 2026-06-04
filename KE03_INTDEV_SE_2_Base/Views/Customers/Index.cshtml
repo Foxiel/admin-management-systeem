@@ -37,9 +37,9 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>@Html.DisplayNameFor(m => m.First().Name)</th>
-                    <th>@Html.DisplayNameFor(m => m.First().Email)</th>
-                    <th>@Html.DisplayNameFor(m => m.First().Telefoonnr)</th>
+                    <th>@Html.DisplayNameFor(model => model.Naam)</th>
+                    <th>@Html.DisplayNameFor(model => model.Email)</th>
+                    <th>@Html.DisplayNameFor(model => model.Telefoonnr)</th>
                     <th>Acties</th>
                 </tr>
             </thead>
@@ -48,7 +48,7 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Naam)</td>
                         <td>@Html.DisplayFor(modelItem => item.Email)</td>
                         <td>@Html.DisplayFor(modelItem => item.Telefoonnr)</td>
 

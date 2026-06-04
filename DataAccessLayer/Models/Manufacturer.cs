@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DataAccessLayer.Models;
 
-public class Category
+public class Manufacturer
 {
     [Key]
     public string Id { get; set; } = string.Empty;

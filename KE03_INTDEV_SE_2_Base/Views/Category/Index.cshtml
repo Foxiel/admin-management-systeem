@@ -1,3 +1,5 @@
+@* Gemaakt door Fabian *@
+
 @model IEnumerable<DataAccessLayer.Models.Category>
 
 @{
@@ -13,10 +15,10 @@
     <thead>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.CategoryId)
+            @Html.DisplayNameFor(model => model.Id)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CategoryName)
+            @Html.DisplayNameFor(model => model.Naam)
         </th>
         <th></th>
     </tr>
@@ -25,14 +27,14 @@
     @foreach (var item in Model) { 
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.CategoryId)
+            @Html.DisplayFor(modelItem => item.Id)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CategoryName)
+            @Html.DisplayFor(modelItem => item.Naam)
         </td>
         <td>
-            <a asp-action="Edit" asp-route-id="@item.CategoryId">Aanpassen</a> |
-            <a asp-action="Delete" asp-route-id="@item.CategoryId">Verwijderen</a>
+            <a asp-action="Edit" asp-route-id="@item.Id">Aanpassen</a> |
+            <a asp-action="Delete" asp-route-id="@item.Id">Verwijderen</a>
         </td>
     </tr>
     }

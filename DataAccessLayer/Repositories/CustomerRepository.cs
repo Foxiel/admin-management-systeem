@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using DataAccessLayer.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
@@ -29,7 +26,7 @@ namespace DataAccessLayer.Repositories
                 customers.Add(new Customer
                 {
                     Id = reader.GetInt32(reader.GetOrdinal("klant_nummer")),
-                    Name = reader.GetString(reader.GetOrdinal("klant_naam")),
+                    Naam = reader.GetString(reader.GetOrdinal("klant_naam")),
                     Email = reader.IsDBNull(reader.GetOrdinal("klant_email"))
                         ? null
                         : reader.GetString(reader.GetOrdinal("klant_email")),
@@ -61,7 +58,7 @@ namespace DataAccessLayer.Repositories
                 return new Customer
                 {
                     Id = reader.GetInt32(reader.GetOrdinal("klant_nummer")),
-                    Name = reader.GetString(reader.GetOrdinal("klant_naam")),
+                    Naam = reader.GetString(reader.GetOrdinal("klant_naam")),
                     Email = reader.IsDBNull(reader.GetOrdinal("klant_email"))
         ? null
         : reader.GetString(reader.GetOrdinal("klant_email")),
@@ -85,7 +82,7 @@ namespace DataAccessLayer.Repositories
             await connection.OpenAsync();
 
             await using var command = new SqlCommand(sql, connection);
-            command.Parameters.AddWithValue("@Name", customer.Name ?? (object)DBNull.Value);
+            command.Parameters.AddWithValue("@Name", customer.Naam ?? (object)DBNull.Value);
             command.Parameters.AddWithValue("@Email", customer.Email ?? (object)DBNull.Value);
             command.Parameters.AddWithValue("@Telefoonnr", (object?)customer.Telefoonnr ?? DBNull.Value);
 
@@ -110,7 +107,7 @@ namespace DataAccessLayer.Repositories
 
             await using var command = new SqlCommand(sql, connection);
             command.Parameters.AddWithValue("@Id", customer.Id);
-            command.Parameters.AddWithValue("@Name", customer.Name ?? (object)DBNull.Value);
+            command.Parameters.AddWithValue("@Name", customer.Naam ?? (object)DBNull.Value);
             command.Parameters.AddWithValue("@Email", customer.Email ?? (object)DBNull.Value);
             command.Parameters.AddWithValue("@Telefoonnr",(object?)customer.Telefoonnr ?? DBNull.Value);
 
