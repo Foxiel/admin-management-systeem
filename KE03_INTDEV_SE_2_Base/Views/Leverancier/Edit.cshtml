@@ -1,4 +1,4 @@
-@model KE03_INTDEV_SE_2_Base.Models.LeverancierModel
+@model DataAccessLayer.Models.Leverancier
 
 @{
     ViewData["Title"] = "Edit";
@@ -12,11 +12,11 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Leverancier_id" />
+            <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="Leverancier_naam" class="control-label"></label>
-                <input asp-for="Leverancier_naam" class="form-control" />
-                <span asp-validation-for="Leverancier_naam" class="text-danger"></span>
+                <label asp-for="Naam" class="control-label"></label>
+                <input asp-for="Naam" class="form-control" />
+                <span asp-validation-for="Naam" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
