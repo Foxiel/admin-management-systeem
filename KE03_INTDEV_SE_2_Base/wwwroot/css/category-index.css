@@ -1,0 +1,12 @@
+.category-search {
+    max-width: 420px;
+}
+
+.category-search__input {
+    width: 100%;
+}
+
+#categoryTableBody tr.is-hidden {
+    display: none;
+}
+

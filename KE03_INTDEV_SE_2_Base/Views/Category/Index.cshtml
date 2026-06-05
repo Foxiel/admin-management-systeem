@@ -6,29 +6,32 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<link rel="stylesheet" href="~/css/category-index.css" asp-append-version="true" />
+
+<h1>Categorie</h1>
+
+<div class="category-search mb-3">
+    <input type="text"
+           id="categorySearch"
+           class="form-control category-search__input"
+           placeholder="Zoek op categorienaam" />
+</div>
 
 <p>
-    <a asp-action="Create">Nieuw toevoegen</a>
+    <a asp-action="Create">Nieuwe toevoegen</a>
 </p>
 <table class="table">
     <thead>
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Id)
-        </th>
         <th>
             @Html.DisplayNameFor(model => model.Naam)
         </th>
         <th></th>
     </tr>
     </thead>
-    <tbody>
+    <tbody id="categoryTableBody">
     @foreach (var item in Model) { 
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Id)
-        </td>
+    <tr data-category-name="@item.Naam">
         <td>
             @Html.DisplayFor(modelItem => item.Naam)
         </td>
@@ -40,3 +43,5 @@
     }
     </tbody>
 </table>
+
+<script src="~/js/category-index.js" asp-append-version="true"></script>
