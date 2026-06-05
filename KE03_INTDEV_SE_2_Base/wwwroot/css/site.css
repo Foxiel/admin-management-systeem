@@ -1,22 +1,568 @@
-html {
-  font-size: 14px;
+/* Matrix Theme */
+:root {
+    --matrix-green: #00ff41;
+    --matrix-green-soft: #00ff66;
+    --matrix-red: #ff0000;
 }
 
-@media (min-width: 768px) {
-  html {
+html {
     font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    background-color: #000;
+    color: #00ff41;
+    font-family: "Consolas", "Courier New", monospace;
+    margin: 0;
+    padding: 0;
 }
+
+
+/* Algemene containers */
+
+.matrix-card {
+    background: rgba(0, 15, 0, 0.9);
+    border: 1px solid #00ff41;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 0 20px #00ff41;
+}
+
+/* Titels */
+
+h1, h2, h3, h4, h5 {
+    color: #00ff41;
+    text-shadow: 0 0 10px #00ff41;
+}
+
+
+/* Inputs */
+
+.form-control {
+    background-color: #000;
+    color: #00ff41;
+    border: 1px solid #00ff41;
+}
+
+    .form-control:focus {
+        background-color: #001100;
+        color: #00ff41;
+        border-color: #00ff41;
+        box-shadow: 0 0 15px #00ff41;
+    }
+
+/* Buttons */
+
+.btn-primary,
+.btn-success {
+    background-color: #00ff41;
+    border: none;
+    color: black;
+    font-weight: bold;
+}
+
+    .btn-primary:hover,
+    .btn-success:hover {
+        box-shadow: 0 0 15px #00ff41;
+        color: #00ff41;
+    }
+
+.btn-danger {
+    background-color: #a71d1d;
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 10px;
+}
+    .btn-danger:hover {
+        background-color: #ff0000;
+        box-shadow: 0 0 20px #ff0000;
+    }
+/* Links */
+
+a {
+    color: #00ff41;
+    text-decoration: none;
+}
+
+    a:hover {
+        text-shadow: 0 0 10px #00ff41;
+    }
+
+
+/* Tabellen */
+
+.table {
+    color: #00ff41;
+    border-color: #00ff41;
+    width: 100%;
+    table-layout: fixed;
+}
+
+    .table th {
+        background-color: #001100;
+    }
+
+    .table td,
+    .table th {
+        border-color: #00ff41 !important;
+    }
+        /* actie kolom neemt alleen wat hij nodig heeft */
+        .table td:last-child,
+        .table th:last-child {
+            width: 220px;
+            white-space: nowrap;
+        }
+
+td, th {
+    vertical-align: middle;
+}
+
+/* Navbar */
+
+.navbar {
+    background-color: black !important;
+    border-bottom: 2px solid rgba(0,255,100,.2);
+    box-shadow: 0 0 20px #00ff41;
+    color: #00E641;
+}
+
+.navbar-brand {
+    color: #00ff66 !important;
+    font-size: 24px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    text-shadow: 0 0 10px rgba(0, 255, 100, 0.6), 0 0 20px rgba(0, 255, 100, 0.4), 0 0 30px rgba(0, 255, 100, 0.2);
+    letter-spacing: 1px;
+}
+
+    .navbar-brand:hover {
+        color: white !important;
+    }
+
+.nav-link {
+    color: #00ff66 !important;
+}
+
+    .nav-link:hover {
+        color: white !important;
+    }
+
+/* ========================================= */
+/* MATRIX CRUD PAGES */
+/* ========================================= */
+
+.crud-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 35px;
+    background: #101010;
+    border: 2px solid var(--matrix-green-soft);
+    transition: 0.3s ease;
+    border-radius: 20px;
+    box-shadow: 0 0 25px rgba(0,255,100,0.15);
+}
+
+.crud-title {
+    color: #00ff66 !important;
+    text-shadow: 0 0 5px #00000000, 0 0 10px #00ff66, 0 0 20px #00ff66, 0 0 40px rgba(0,255,100,0.6);
+    font-size: 38px;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.crud-subtitle {
+    color: #7bcf9a;
+    margin-bottom: 25px;
+}
+
+/* ========================================= */
+/* FORMS */
+/* ========================================= */
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.control-label {
+    display: block;
+    color: #7bcf9a;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.form-control {
+    width: 100%;
+    background: #050505;
+    border: 2px solid #222;
+    color: #00ff66;
+    padding: 12px 15px;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+    .form-control:focus {
+        outline: none;
+        border-color: #00ff66;
+        box-shadow: 0 0 15px rgba(0,255,100,0.25);
+    }
+
+/* ========================================= */
+/* BUTTONS */
+/* ========================================= */
+
+.btn-primary,
+.btn-success {
+    background: #00ff66;
+    color: black;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-weight: 700;
+    transition: 0.3s;
+}
+
+    .btn-primary:hover,
+    .btn-success:hover {
+        background: white;
+    }
+
+
+
+/* ========================================= */
+/* TABLES */
+/* ========================================= */
+
+.table {
+    width: 95%;
+    max-width: 1100px;
+    border-collapse: collapse;
+    background: #101010;
+    border: 2px solid #00ff66;
+}
+
+    .table thead {
+        background: rgba(0,255,100,0.12);
+    }
+
+    .table th {
+        color: #00ff66;
+        padding: 16px;
+        border: 1px solid #00ff66;
+        text-align: left;
+        font-size: 17px;
+    }
+
+    .table td {
+        padding: 15px;
+        border: 1px solid rgba(0,255,100,0.35);
+        color: white;
+    }
+
+    .table tr:hover {
+        background: rgba(0,255,100,0.08);
+    }
+
+/* EXTRA RAND RONDOM TABEL */
+
+.table-wrapper {
+    display: flex;
+    justify-content: left;
+    overflow-x: auto;
+    padding: 5px;
+    border-radius: 15px;
+    box-sizing: border-box;
+}
+
+/* ========================================= */
+/* DETAILS PAGE */
+/* ========================================= */
+
+dl.row {
+    margin-top: 20px;
+}
+
+    dl.row dt {
+        color: #00ff66;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    dl.row dd {
+        color: white;
+        margin-bottom: 15px;
+    }
+
+/* ========================================= */
+/* LINKS */
+/* ========================================= */
+
+a {
+    color: #00ff66;
+    transition: 0.3s;
+}
+
+    a:hover {
+        color: white;
+    }
+
+/* ========================================= */
+/* ICONS */
+/* ========================================= */
+
+.icon-svg {
+    width: 24px;
+    height: 24px;
+    stroke: currentColor !important;
+    stroke-width: 2;
+    fill: none;
+    pointer-events: none;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    width: 220px;
+    min-width: 200px;
+    white-space: nowrap;
+}
+
+.crud-icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    transition: 0.2s;
+    padding: 6px 10px;
+}
+
+
+/* keep strictly square only for icon-only buttons */
+.crud-icon-btn.icon-only {
+    width: 42px;
+    height: 42px;
+    padding: 0;
+}
+
+/* EDIT */
+
+.edit-btn {
+    color: #00ff66;
+    border: 1px solid #00ff66;
+    background: transparent;
+}
+
+    .edit-btn:hover {
+        background: #00ff66;
+        color: black;
+    }
+
+    .edit-btn:hover .icon-svg {
+        stroke: black !important;
+    }
+
+/* DELETE */
+
+.delete-btn {
+    color: #ff4444;
+    border: 1px solid #ff4444;
+    background: transparent;
+}
+
+    .delete-btn:hover {
+        background: #ff4444;
+        color: white;
+    }
+
+    .delete-btn:hover .icon-svg {
+        stroke: white !important;
+    }
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-box {
+    background: #111;
+    border: 1px solid #00ff41;
+    padding: 25px;
+    border-radius: 10px;
+    width: 350px;
+    text-align: center;
+    color: #00ff41;
+    box-shadow: 0 0 20px #00ff41;
+}
+
+.modal-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+/* DETAILS */
+
+
+/* simple text link for details (use this for textual 'Details' link) */
+.details-link {
+    display: inline-block;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #00ff66;
+    color: #00ff66;
+    background-color: transparent;
+}
+
+    .details-link:hover {
+        background: #00ff66;
+        color: black;
+    }
+
+.details-header {
+    display: flex;
+    align-items: center;
+    justify-content:left;
+    margin-bottom: 10px;
+    color: #00ff66;
+    padding:10px;
+    gap:10px;
+    
+}
+/* ========================================= */
+/* ========================================= */
+/* ANGRY MODE (DANGER THEME) */
+/* ========================================= */
+/* ========================================= */
+
+.angry-mode {
+    --main-color: var(--matrix-red);
+    border: 2px solid var(--matrix-red) !important;
+    box-shadow: 0 0 25px rgba(255, 0, 0, 1) !important;
+    background: #0a0000 !important;
+    color: var(--matrix-red) !important;
+}
+
+    /* headings in angry mode */
+    .angry-mode h1,
+    .angry-mode h2,
+    .angry-mode h3,
+    .angry-mode h4,
+    .angry-mode h5 {
+        color: var(--matrix-red) !important;
+        text-shadow: 0 0 10px var(--matrix-red) !important;
+    }
+
+    .angry-mode hr {
+        border-color: var(--matrix-red) !important;
+    }
+
+    /* data list styling */
+    .angry-mode dl.row dt {
+        color: var(--matrix-red) !important;
+    }
+
+    .angry-mode dl.row dd {
+        color: white !important;
+    }
+
+    /* table override */
+    .angry-mode .table {
+        border-color: var(--main-color) !important;
+        color: var(--main-color) !important;
+    }
+
+        .angry-mode .table th {
+            color: var(--main-color) !important;
+            border-color: var(--main-color) !important;
+            background: rgba(255, 0, 0, 0.1) !important;
+        }
+
+        .angry-mode .table td {
+            border-color: rgba(255, 0, 0, 0.35) !important;
+        }
+
+    /* form override */
+    .angry-mode .form-control {
+        border-color: var(--main-color) !important;
+        color: var(--main-color) !important;
+        box-shadow: 0 0 10px rgba(255,0,0,0.3) !important;
+    }
+
+        .angry-mode .form-control:focus {
+            border-color: var(--main-color) !important;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5) !important;
+        }
+
+
+
+
+    /* ========================================= */
+    /* DELETE MODAL OVERRIDE */
+    /* ========================================= */
+
+    .angry-mode .modal-box {
+        border-color: var(--matrix-red) !important;
+        color: var(--matrix-red) !important;
+        background: #0a0000 !important;
+        box-shadow: 0 0 25px rgba(255,0,0,1) !important;
+    }
+
+        .angry-mode .modal-box h2 {
+            color: var(--matrix-red) !important;
+            text-shadow: 0 0 10px var(--matrix-red) !important;
+        }
+
+        .angry-mode .modal-box p {
+            color: white !important;
+        }
+
+
+
+/*search*/
+.crud-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-input {
+    width: 250px;
+    padding: 8px 12px;
+    border: 1px solid #00ff41;
+    border-radius: 5px;
+    background: #111;
+    color: #00ff41;
+    outline: none;
+}
+
+    .search-input:focus {
+        box-shadow: 0 0 8px #00ff41;
+    }

@@ -14,6 +14,7 @@ namespace KE03_INTDEV_SE_2_Base
             options.UseSqlServer(builder.Configuration.GetConnectionString("Connection")));
 
             builder.Services.AddScoped<DataAccessLayer.Repositories.CustomerRepository>();
+            builder.Services.AddScoped<DataAccessLayer.Repositories.CategoryRespository>();
 
             builder.Services.AddControllersWithViews();
             
