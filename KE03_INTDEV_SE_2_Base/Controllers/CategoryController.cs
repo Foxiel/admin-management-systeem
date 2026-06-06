@@ -31,7 +31,7 @@ public class CategoryController : Controller
     // POST: Category/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("CategoryId, CategoryName")] Category category)
+    public async Task<IActionResult> Create([Bind("Naam")] Category category)
     {
         if (ModelState.IsValid)
         {
@@ -42,11 +42,11 @@ public class CategoryController : Controller
     }
     
     // GET Category/Edit/C01
-    public async Task<IActionResult> Edit(string? id)
+    public async Task<IActionResult> Edit(int? id)
     {
         if (id == null) return NotFound();
         
-        var category = await _repository.GetCategoryById(id);
+        var category = await _repository.GetCategoryById(id.Value);
         if (category == null) return NotFound();
         
         return View(category);
@@ -55,7 +55,7 @@ public class CategoryController : Controller
     // POST: Category/Edit/C01
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(string id, [Bind("CategoryId, CategoryName")] Category category)
+    public async Task<IActionResult> Edit(int id, [Bind("Id, Naam")] Category category)
     {
         if (id != category.Id) return NotFound();
 
@@ -68,12 +68,11 @@ public class CategoryController : Controller
     }
     
     // GET: Category/Delete/C01
-    public async Task<IActionResult> Delete(string? id)
+    public async Task<IActionResult> Delete(int? id)
     {
         if (id == null) return NotFound();
 
-        var category = await _repository.GetCategoryById(id);
-        if (category == null) return NotFound();
+        var category = await _repository.GetCategoryById(id.Value);
 
         return View(category);
     }
@@ -81,7 +80,7 @@ public class CategoryController : Controller
     // POST: Category/Delete/C01
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(string id)
+    public async Task<IActionResult> DeleteConfirmed(int id)
     {
         await _repository.DeleteCategory(id);
         return RedirectToAction(nameof(Index));

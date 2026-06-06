@@ -7,7 +7,6 @@ namespace DataAccessLayer.Models;
 
 public class Category
 {
-    [Key]
-    public string Id { get; set; } = string.Empty;
+    [Key] public int Id { get; set; }
     public string Naam { get; set; } = string.Empty;
 }
