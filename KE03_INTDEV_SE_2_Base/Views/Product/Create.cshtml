@@ -1,0 +1,52 @@
+﻿@model KE03_INTDEV_SE_2_Base.Controllers.ProductController.ProductEditModel
+@{
+    ViewData["Title"] = "Nieuw product";
+    var leveranciers = ViewBag.Leveranciers as List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> ?? new();
+    var locaties = ViewBag.Locaties as List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> ?? new();
+}
+
+<h1>Nieuw product</h1>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label class="form-label">EAN</label>
+        <input asp-for="EAN" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Naam</label>
+        <input asp-for="Naam" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Leverancier</label>
+        <select asp-for="LeverancierId" class="form-select">
+            @foreach (var i in leveranciers)
+            {
+                <option value="@i.Value">@i.Text</option>
+            }
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Locatie</label>
+        <select asp-for="LocatieId" class="form-select">
+            @foreach (var i in locaties)
+            {
+                <option value="@i.Value">@i.Text</option>
+            }
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Prijs</label>
+        <input asp-for="Prijs" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Huidige voorraad</label>
+        <input asp-for="HuidigeVoorraad" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Status</label>
+        <input asp-for="Status" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Opslaan</button>
+    <a asp-controller="Product" asp-action="Index" class="btn btn-secondary ms-2">Annuleren</a>
+</form>

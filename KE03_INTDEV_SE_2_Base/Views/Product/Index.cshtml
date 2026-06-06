@@ -1,0 +1,84 @@
+﻿@model IEnumerable<dynamic>
+@{
+    ViewData["Title"] = "Producten";
+    var leveranciers = ViewBag.Leveranciers as List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> ?? new();
+    var locaties = ViewBag.Locaties as List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> ?? new();
+}
+
+<h1>Producten</h1>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-2">
+        <input class="form-control" name="ean" placeholder="EAN" value="@Context.Request.Query["ean"]" />
+    </div>
+    <div class="col-md-2">
+        <input class="form-control" name="naam" placeholder="Naam" value="@Context.Request.Query["naam"]" />
+    </div>
+    <div class="col-md-2">
+        <select class="form-select" name="leverancierId">
+            @foreach (var i in leveranciers)
+            {
+                <option value="@i.Value" @(Context.Request.Query["leverancierId"] == i.Value ? "selected" : "")>@i.Text</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-2">
+        <select class="form-select" name="locatieId">
+            @foreach (var i in locaties)
+            {
+                <option value="@i.Value" @(Context.Request.Query["locatieId"] == i.Value ? "selected" : "")>@i.Text</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-1">
+        <input class="form-control" name="minPrijs" placeholder="Min €" value="@Context.Request.Query["minPrijs"]" />
+    </div>
+    <div class="col-md-1">
+        <input class="form-control" name="maxPrijs" placeholder="Max €" value="@Context.Request.Query["maxPrijs"]" />
+    </div>
+    <div class="col-md-1">
+        <input class="form-control" name="huidigeVoorraadMax" placeholder="Max voorraad" value="@Context.Request.Query["huidigeVoorraadMax"]" />
+    </div>
+    <div class="col-md-1">
+        <input class="form-control" name="status" placeholder="Status" value="@Context.Request.Query["status"]" />
+    </div>
+    <div class="col-12 mt-2">
+        <button type="submit" class="btn btn-primary">Filter</button>
+        <a asp-controller="Product" asp-action="Index" class="btn btn-secondary ms-2">Reset</a>
+        <a asp-controller="Product" asp-action="Create" class="btn btn-success float-end">Nieuw product</a>
+    </div>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>EAN</th>
+            <th>Naam</th>
+            <th>Leverancier</th>
+            <th>Locatie</th>
+            <th>Prijs</th>
+            <th>Voorraad</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.EAN</td>
+                <td>@item.Naam</td>
+                <td>@item.LeverancierNaam</td>
+                <td>@item.LocatieNaam</td>
+                <td>@item.Prijs.ToString("C")</td>
+                <td>@item.HuidigeVoorraad</td>
+                <td>@item.Status</td>
+                <td>
+                    <a asp-controller="Product" asp-action="Details" asp-route-id="@item.ProductId" class="btn btn-sm btn-info">Details</a>
+                    <a asp-controller="Product" asp-action="Edit" asp-route-id="@item.ProductId" class="btn btn-sm btn-primary">Bewerken</a>
+                    <a asp-controller="Product" asp-action="Delete" asp-route-id="@item.ProductId" class="btn btn-sm btn-danger">Verwijderen</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
