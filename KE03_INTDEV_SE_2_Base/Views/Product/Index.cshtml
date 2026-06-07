@@ -1,8 +1,7 @@
-﻿@model IEnumerable<dynamic>
+﻿@model IEnumerable<KE03_INTDEV_SE_2_Base.Controllers.ProductController.ProductListItem>
 @{
     ViewData["Title"] = "Producten";
     var leveranciers = ViewBag.Leveranciers as List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> ?? new();
-    var locaties = ViewBag.Locaties as List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> ?? new();
 }
 
 <h1>Producten</h1>
@@ -14,22 +13,19 @@
     <div class="col-md-2">
         <input class="form-control" name="naam" placeholder="Naam" value="@Context.Request.Query["naam"]" />
     </div>
+
+    <!-- Filter: leverancier as dropdown using supplier name as value -->
     <div class="col-md-2">
-        <select class="form-select" name="leverancierId">
+        <select class="form-select" name="leverancierNaam">
+            <option value="">-- Alle leveranciers --</option>
             @foreach (var i in leveranciers)
             {
-                <option value="@i.Value" @(Context.Request.Query["leverancierId"] == i.Value ? "selected" : "")>@i.Text</option>
+                var selected = Context.Request.Query["leverancierNaam"] == i.Value;
+                <option value="@i.Value" selected="@(selected ? "selected" : null)">@i.Text</option>
             }
         </select>
     </div>
-    <div class="col-md-2">
-        <select class="form-select" name="locatieId">
-            @foreach (var i in locaties)
-            {
-                <option value="@i.Value" @(Context.Request.Query["locatieId"] == i.Value ? "selected" : "")>@i.Text</option>
-            }
-        </select>
-    </div>
+
     <div class="col-md-1">
         <input class="form-control" name="minPrijs" placeholder="Min €" value="@Context.Request.Query["minPrijs"]" />
     </div>
@@ -76,7 +72,6 @@
                 <td>
                     <a asp-controller="Product" asp-action="Details" asp-route-id="@item.ProductId" class="btn btn-sm btn-info">Details</a>
                     <a asp-controller="Product" asp-action="Edit" asp-route-id="@item.ProductId" class="btn btn-sm btn-primary">Bewerken</a>
-                    <a asp-controller="Product" asp-action="Delete" asp-route-id="@item.ProductId" class="btn btn-sm btn-danger">Verwijderen</a>
                 </td>
             </tr>
         }
