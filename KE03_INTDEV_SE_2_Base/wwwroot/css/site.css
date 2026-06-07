@@ -718,3 +718,118 @@ a:hover {
     padding: 8px 12px;
 }
 
+/*-------------------sidebar-------------------*/
+.sidebar {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 260px;
+    height: calc(100vh - 70px);
+    padding: 15px;
+    background: #050505;
+    border-right: 2px solid #00ff41;
+    box-shadow: 0 0 15px rgba(0, 255, 65, 0.45);
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 999;
+    transform: translateX(0);
+    transition: transform 0.3s ease;
+}
+
+    .sidebar.closed {
+        transform: translateX(-100%);
+    }
+
+.sidebar-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+    .sidebar-list li {
+        display: block;
+        width: 100%;
+    }
+
+    .sidebar-list a {
+        display: flex !important;
+        align-items: center;
+        width: 100%;
+        min-height: 55px;
+        padding: 12px 15px;
+        box-sizing: border-box;
+        background: rgba(0, 255, 65, 0.06);
+        border: 1px solid #00ff41;
+        border-radius: 10px;
+        color: #00ff41 !important;
+        text-decoration: none !important;
+        font-size: 15px;
+        font-weight: bold;
+        letter-spacing: 0.5px;
+        text-shadow: 0 0 6px #00ff41;
+        transition: 0.25s;
+    }
+
+        .sidebar-list a:hover {
+            background: rgba(0, 255, 65, 0.18);
+            color: white !important;
+            box-shadow: 0 0 12px #00ff41;
+            transform: translateX(4px);
+        }
+
+.main-content {
+    margin-top: 70px;
+    margin-left: 260px;
+    padding: 25px;
+    transition: margin-left 0.3s ease;
+}
+
+    .main-content.expanded {
+        margin-left: 0;
+    }
+
+.sidebar {
+    display: block !important;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 260px;
+    height: calc(100vh - 70px);
+    background: #050505;
+    border-right: 2px solid #00ff41;
+    padding: 15px;
+    z-index: 999;
+    transform: translateX(0);
+    transition: transform 0.3s ease;
+}
+
+    .sidebar.closed {
+        transform: translateX(-100%) !important;
+    }
+
+    .sidebar a {
+        display: block !important;
+        width: 100%;
+        margin-bottom: 12px;
+        padding: 14px 15px;
+        border: 1px solid #00ff41;
+        border-radius: 10px;
+        color: #00ff41 !important;
+        background: rgba(0, 255, 65, 0.08);
+        text-decoration: none !important;
+        text-shadow: 0 0 6px #00ff41;
+    }
+
+.main-content {
+    margin-top: 70px;
+    margin-left: 260px;
+    padding: 25px;
+    transition: margin-left 0.3s ease;
+}
+
+    .main-content.expanded {
+        margin-left: 0 !important;
+    }

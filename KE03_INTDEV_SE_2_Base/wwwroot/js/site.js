@@ -92,7 +92,7 @@ setupSearch(
         </tr>
     `
 );
-
+//deleate popup
 function openModal() {
     const modal = document.getElementById("deleteModal");
     if (modal) modal.style.display = "flex";
@@ -107,3 +107,29 @@ function confirmDelete() {
     const form = document.getElementById("deleteForm");
     if (form) form.submit();
 }
+//hamburgermenu
+document.addEventListener("DOMContentLoaded", function () {
+    const btn = document.getElementById("menuToggle");
+    const sidebar = document.getElementById("sidebar");
+    const content = document.querySelector(".main-content");
+
+    if (!btn) {
+        console.error("menuToggle niet gevonden");
+        return;
+    }
+
+    if (!sidebar) {
+        console.error("sidebar niet gevonden");
+        return;
+    }
+
+    btn.addEventListener("click", function () {
+        console.log("hamburger clicked");
+
+        sidebar.classList.toggle("closed");
+
+        if (content) {
+            content.classList.toggle("expanded");
+        }
+    });
+});

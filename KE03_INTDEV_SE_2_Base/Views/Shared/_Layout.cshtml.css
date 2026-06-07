@@ -37,3 +37,56 @@ button.accept-policy {
   line-height: 60px;
 
 }
+
+/* TOP NAVBAR */
+
+.top-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 0 20px;
+    background: #000;
+    border-bottom: 2px solid #00ff41;
+    box-shadow: 0 0 15px rgba(0, 255, 65, 0.6);
+}
+
+.hamburger-btn {
+    width: 45px;
+    height: 45px;
+    background: transparent;
+    border: 1px solid #00ff41;
+    border-radius: 8px;
+    color: #00ff41;
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+    text-shadow: 0 0 6px #00ff41;
+    transition: 0.25s;
+}
+
+    .hamburger-btn:hover {
+        background: #00ff41;
+        color: #000;
+        box-shadow: 0 0 15px #00ff41;
+        text-shadow: none;
+    }
+
+.top-navbar .navbar-brand {
+    color: #00ff41 !important;
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-decoration: none;
+    text-shadow: 0 0 6px #00ff41;
+}
+
+    .top-navbar .navbar-brand:hover {
+        color: white !important;
+        text-shadow: 0 0 10px #00ff41;
+    }
