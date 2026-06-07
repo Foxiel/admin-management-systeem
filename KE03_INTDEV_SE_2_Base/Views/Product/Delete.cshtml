@@ -1,0 +1,21 @@
+﻿@model KE03_INTDEV_SE_2_Base.Controllers.ProductController.ProductEditModel
+@{
+    ViewData["Title"] = "Product verwijderen";
+}
+
+<h1>Product verwijderen</h1>
+
+<div class="alert alert-warning">
+    Weet je zeker dat je dit product wilt verwijderen?
+</div>
+
+<div class="mb-2"><strong>EAN:</strong> @Model.EAN</div>
+<div class="mb-2"><strong>Naam:</strong> @Model.Naam</div>
+<div class="mb-2"><strong>Leverancier:</strong> @Model.LeverancierNaam</div>
+<div class="mb-2"><strong>Locatie:</strong> @Model.LocatieNaam</div>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="ProductId" />
+    <button type="submit" class="btn btn-danger">Ja, verwijderen</button>
+    <a asp-controller="Product" asp-action="Index" class="btn btn-secondary ms-2">Annuleren</a>
+</form>

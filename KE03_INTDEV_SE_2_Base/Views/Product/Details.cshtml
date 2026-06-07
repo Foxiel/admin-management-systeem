@@ -1,0 +1,21 @@
+﻿@model KE03_INTDEV_SE_2_Base.Controllers.ProductController.ProductEditModel
+@{
+    ViewData["Title"] = "Product details";
+}
+
+<h1>Product details</h1>
+
+<div class="mb-2"><strong>EAN:</strong> @Model.EAN</div>
+<div class="mb-2"><strong>Naam:</strong> @Model.Naam</div>
+<div class="mb-2"><strong>Leverancier:</strong> @Model.LeverancierNaam</div>
+<div class="mb-2"><strong>Locatie:</strong> @Model.LocatieNaam</div>
+<div class="mb-2"><strong>Prijs:</strong> @Model.Prijs.ToString("C")</div>
+<div class="mb-2"><strong>Gewicht:</strong> @Model.Gewicht</div>
+<div class="mb-2"><strong>Huidige voorraad:</strong> @Model.HuidigeVoorraad</div>
+<div class="mb-2"><strong>Minimum voorraad:</strong> @Model.MinimumVoorraad</div>
+<div class="mb-2"><strong>Garantie:</strong> @Model.Garantie</div>
+<div class="mb-2"><strong>Status:</strong> @Model.Status</div>
+<div class="mb-2"><strong>Beschrijving:</strong><div class="border p-2">@Model.Beschrijving</div></div>
+
+<a asp-controller="Product" asp-action="Edit" asp-route-id="@Model.ProductId" class="btn btn-primary">Bewerken</a>
+<a asp-controller="Product" asp-action="Index" class="btn btn-secondary ms-2">Terug naar lijst</a>

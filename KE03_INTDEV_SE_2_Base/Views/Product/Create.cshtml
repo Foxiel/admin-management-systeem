@@ -1,0 +1,80 @@
+﻿@model KE03_INTDEV_SE_2_Base.Controllers.ProductController.ProductEditModel
+@{
+    ViewData["Title"] = "Nieuw product";
+}
+
+<h1 class="h4 mb-3">Nieuw product</h1>
+
+<form asp-action="Create" method="post">
+    <div class="row g-2">
+        <div class="col-md-3">
+            <label class="form-label small">EAN</label>
+            <input asp-for="EAN" class="form-control form-control-sm" />
+            <span asp-validation-for="EAN" class="text-danger small"></span>
+        </div>
+
+        <div class="col-md-5">
+            <label class="form-label small">Naam</label>
+            <input asp-for="Naam" class="form-control form-control-sm" />
+            <span asp-validation-for="Naam" class="text-danger small"></span>
+        </div>
+
+        <div class="col-md-4">
+            <label class="form-label small">Leverancier</label>
+            <select asp-for="LeverancierId" asp-items="ViewBag.Leveranciers" class="form-select form-select-sm">
+                <option value="0">-- Selecteer leverancier --</option>
+            </select>
+            <span asp-validation-for="LeverancierId" class="text-danger small"></span>
+        </div>
+    </div>
+
+    <div class="row g-2 mt-2">
+        <div class="col-12">
+            <label class="form-label small">Beschrijving</label>
+            <textarea asp-for="Beschrijving" class="form-control form-control-sm" rows="3" placeholder="Korte omschrijving van het product"></textarea>
+            <span asp-validation-for="Beschrijving" class="text-danger small"></span>
+        </div>
+    </div>
+
+    <div class="row g-2 mt-2">
+        <div class="col-md-4">
+            <label class="form-label small">Locatie (Gang / Schap / Vak)</label>
+            <div class="d-flex gap-2">
+                <input asp-for="LocatieGang" class="form-control form-control-sm" placeholder="Gang" />
+                <input asp-for="LocatieSchap" class="form-control form-control-sm" placeholder="Schap" />
+                <input asp-for="LocatieVak" class="form-control form-control-sm" placeholder="Vak" />
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <label class="form-label small">Prijs</label>
+            <input asp-for="Prijs" class="form-control form-control-sm" type="number" step="0.01" />
+        </div>
+
+        <div class="col-md-2">
+            <label class="form-label small">Huidige voorraad</label>
+            <input asp-for="HuidigeVoorraad" class="form-control form-control-sm" type="number" />
+        </div>
+
+        <div class="col-md-2">
+            <label class="form-label small">Minimum voorraad</label>
+            <input asp-for="MinimumVoorraad" class="form-control form-control-sm" type="number" />
+        </div>
+
+        <div class="col-md-2">
+            <label class="form-label small">Status</label>
+            <input asp-for="Status" class="form-control form-control-sm" />
+        </div>
+    </div>
+
+    <div class="row g-2 mt-3">
+        <div class="col">
+            <button type="submit" class="btn btn-success btn-sm">Opslaan</button>
+            <a asp-controller="Product" asp-action="Index" class="btn btn-secondary btn-sm ms-2">Annuleren</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
