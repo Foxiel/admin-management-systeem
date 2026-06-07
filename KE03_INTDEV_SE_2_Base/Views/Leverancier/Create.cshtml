@@ -1,4 +1,4 @@
-@model KE03_INTDEV_SE_2_Base.Models.LeverancierModel
+@model DataAccessLayer.Models.Leverancier
 
 @{
     ViewData["Title"] = "Create";
@@ -14,9 +14,9 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
-                <label asp-for="Leverancier_naam" class="control-label"></label>
-                <input asp-for="Leverancier_naam" class="form-control" />
-                <span asp-validation-for="Leverancier_naam" class="text-danger"></span>
+                <label asp-for="Naam" class="control-label"></label>
+                <input asp-for="Naam" class="form-control" />
+                <span asp-validation-for="Naam" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

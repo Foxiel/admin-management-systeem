@@ -1,151 +1,126 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using KE03_INTDEV_SE_2_Base.Models;
 using DataAccessLayer.Models;
 using DataAccessLayer.Repositories;
+using System;
+using System.Threading.Tasks;
 
-
-public class OrdersController : Controller
+namespace KE03_INTDEV_SE_2_Base.Controllers
 {
-    private readonly appDbContext _context;
-
-    public OrdersController(appDbContext context)
+    public class OrdersController : Controller
     {
-        _context = context;
-    }
+        private readonly OrderRepository _repository;
 
-    // GET: ORDERS
-    public async Task<IActionResult> Index()
-    {
-        return View(await _context.Order.ToListAsync());
-    }
-
-    // GET: ORDERS/Details/5
-    public async Task<IActionResult> Details(int? orderid)
-    {
-        if (orderid == null)
+        public OrdersController(OrderRepository repository)
         {
-            return NotFound();
+            _repository = repository;
         }
 
-        var order = await _context.Order
-            .FirstOrDefaultAsync(m => m.Id == orderid);
-        if (order == null)
+        // GET: ORDERS
+        public async Task<IActionResult> Index(
+            string? q,
+            string? klantNaam,
+            string? klantEmail,
+            string? klantTelefoon,
+            DateTime? bestelDatum,
+            string? bestelStatus)
         {
-            return NotFound();
+            // If a single search box 'q' is used, search it against name/email/phone
+            if (!string.IsNullOrWhiteSpace(q))
+            {
+                klantNaam = klantNaam ?? q;
+                klantEmail = klantEmail ?? q;
+                klantTelefoon = klantTelefoon ?? q;
+            }
+
+            var list = await _repository.GetFilteredAsync(klantNaam, klantEmail, klantTelefoon, bestelDatum, bestelStatus);
+            return View("~/Views/Order/Index.cshtml", list);
         }
 
-        return View(order);
-    }
-
-    // GET: ORDERS/Create
-    public IActionResult Create()
-    {
-        return View();
-    }
-
-    // POST: ORDERS/Create
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("OrderId,OrderDatum,OrderStatus,BetaalStatus,Verzendkosten,TotaalBedrag,KlantId,ProductId,Aantal")] Order order)
-    {
-        if (ModelState.IsValid)
+        // GET: ORDERS/Details/5    
+        public async Task<IActionResult> Details(int? orderid)
         {
-            _context.Add(order);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-        return View(order);
-    }
+            if (orderid == null) return NotFound();
 
-    // GET: ORDERS/Edit/5
-    public async Task<IActionResult> Edit(int? orderid)
-    {
-        if (orderid == null)
-        {
-            return NotFound();
+            var order = await _repository.GetByIdAsync(orderid.Value);
+            if (order == null) return NotFound();
+
+            return View("~/Views/Order/Details.cshtml", order);
         }
 
-        var order = await _context.Order.FindAsync(orderid);
-        if (order == null)
+        // GET: ORDERS/Create
+        public IActionResult Create()
         {
-            return NotFound();
-        }
-        return View(order);
-    }
-
-    // POST: ORDERS/Edit/5
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int? orderid, [Bind("OrderId,OrderDatum,OrderStatus,BetaalStatus,Verzendkosten,TotaalBedrag,KlantId,ProductId,Aantal")] Order order)
-    {
-        if (orderid != order.Id)
-        {
-            return NotFound();
+            return View("~/Views/Order/Create.cshtml");
         }
 
-        if (ModelState.IsValid)
+        // POST: ORDERS/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,Klant,Producten,BestelDatum,BestelStatus")] Order order)
         {
             try
             {
-                _context.Update(order);
-                await _context.SaveChangesAsync();
+                await _repository.AddAsync(order);
+                return RedirectToAction(nameof(Index));
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!OrderExists(order.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                // Log the exception (ex) here using your preferred logging framework
+                ModelState.AddModelError("", "Er is een fout opgetreden tijdens het aanmaken van de bestelling. Probeer het alstublieft later opnieuw.");
+                return View("~/Views/Order/Create.cshtml", order);
             }
+        }
+
+        // GET: ORDERS/Edit/5
+        public async Task<IActionResult> Edit(int? orderid)
+        {
+            if (orderid == null) return NotFound();
+
+            var order = await _repository.GetByIdAsync(orderid.Value);
+            if (order == null) return NotFound();
+
+            return View("~/Views/Order/Edit.cshtml", order);
+        }
+
+        // POST: ORDERS/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int? orderid, [Bind("Id,Klant,Producten,BestelDatum,BestelStatus")] Order order)
+        {
+            if (orderid != order.Id) return NotFound();
+
+            try
+            {
+                await _repository.UpdateAsync(order);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (ex) here using your preferred logging framework
+                ModelState.AddModelError("", "Er is een fout opgetreden tijdens het bijwerken van de bestelling. Probeer het alstublieft later opnieuw.");
+                return View("~/Views/Order/Edit.cshtml", order);
+            }
+        }
+
+        // GET: ORDERS/Delete/5
+        public async Task<IActionResult> Delete(int? orderid)
+        {
+            if (orderid == null) return NotFound();
+
+            var order = await _repository.GetByIdAsync(orderid.Value);
+            if (order == null) return NotFound();
+
+            return View("~/Views/Order/Delete.cshtml", order);
+        }
+
+        // POST: ORDERS/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int? orderid)
+        {
+            if (orderid == null) return NotFound();
+            await _repository.DeleteAsync(orderid.Value);
             return RedirectToAction(nameof(Index));
         }
-        return View(order);
-    }
-
-    // GET: ORDERS/Delete/5
-    public async Task<IActionResult> Delete(int? orderid)
-    {
-        if (orderid == null)
-        {
-            return NotFound();
-        }
-
-        var order = await _context.Order
-            .FirstOrDefaultAsync(m => m.Id == orderid);
-        if (order == null)
-        {
-            return NotFound();
-        }
-
-        return View(order);
-    }
-
-    // POST: ORDERS/Delete/5
-    [HttpPost, ActionName("Delete")]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(int? orderid)
-    {
-        var order = await _context.Order.FindAsync(orderid);
-        if (order != null)
-        {
-            _context.Order.Remove(order);
-        }
-
-        await _context.SaveChangesAsync();
-        return RedirectToAction(nameof(Index));
-    }
-
-    private bool OrderExists(int? orderid)
-    {
-        return _context.Order.Any(e => e.Id == orderid);
     }
 }

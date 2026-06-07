@@ -14,21 +14,23 @@ public class CategoryRespository : BaseDAL
 
     public async Task<IEnumerable<Category>> GetAllCategories()
     {
-        const string sql = "SELECT categorie_id, categorie_naam FROM categorie";
+        var sql = "SELECT categorie_id, naam FROM categorie";
+        sql += " ORDER BY naam";
         var categories = new List<Category>();
 
         await using var connection = (SqlConnection)GetConnection();
         await connection.OpenAsync();
         
         await using var command = new SqlCommand(sql, connection);
+
         await using var reader = await command.ExecuteReaderAsync();
 
         while (await reader.ReadAsync())
         {
             categories.Add(new Category
             {
-                Id = reader.GetString(reader.GetOrdinal("categorie_id")),
-                Naam = reader.GetString(reader.GetOrdinal("categorie_naam"))
+                Id = reader.GetInt32(reader.GetOrdinal("categorie_id")),
+                Naam = reader.GetString(reader.GetOrdinal("naam"))
             });
         } 
         await connection.CloseAsync();
@@ -36,9 +38,9 @@ public class CategoryRespository : BaseDAL
         return categories;
     }
 
-    public async Task<Category> GetCategoryById(string id)
+    public async Task<Category?> GetCategoryById(int id)
     {
-        const string sql = "SELECT categorie_id, categorie_naam FROM categorie WHERE categorie_id = @Id";
+        const string sql = "SELECT categorie_id, naam FROM categorie WHERE categorie_id = @Id";
         
         await using var connection = (SqlConnection)GetConnection();
         await connection.OpenAsync();
@@ -51,23 +53,22 @@ public class CategoryRespository : BaseDAL
         {
             return new Category
             {
-                Id = reader.GetString(reader.GetOrdinal("categorie_id")),
-                Naam = reader.GetString(reader.GetOrdinal("categorie_naam"))
+                Id = reader.GetInt32(reader.GetOrdinal("categorie_id")),
+                Naam = reader.GetString(reader.GetOrdinal("naam"))
             };
         }
 
-        return null;
+        return null!;
     }
 
     public async Task AddCategory(Category category)
     {
-        const string sql = "INSERT INTO categorie (categorie_id, categorie_naam) VALUES (@id, @name)";
+        const string sql = "INSERT INTO categorie (naam) VALUES (@name)";
 
         await using var connection = (SqlConnection)GetConnection();
         await connection.OpenAsync();
         
         await using var command = new SqlCommand(sql, connection);
-        command.Parameters.AddWithValue("@id", category.Id);
         command.Parameters.AddWithValue("@name", category.Naam);
         
         await command.ExecuteNonQueryAsync();
@@ -75,7 +76,7 @@ public class CategoryRespository : BaseDAL
 
     public async Task EditCategory(Category category)
     {
-        const string sql = "UPDATE categorie SET categorie_id = @id, categorie_naam = @name WHERE categorie_id = @id";
+        const string sql = "UPDATE categorie SET naam = @name WHERE categorie_id = @id";
         
         await using var connection = (SqlConnection)GetConnection();
         await connection.OpenAsync();
@@ -87,7 +88,7 @@ public class CategoryRespository : BaseDAL
         await command.ExecuteNonQueryAsync();
     }
 
-    public async Task DeleteCategory(string id)
+    public async Task DeleteCategory(int id)
     {
         const string sql =  "DELETE FROM categorie WHERE categorie_id = @id";
         

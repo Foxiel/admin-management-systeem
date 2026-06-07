@@ -8,6 +8,6 @@ namespace DataAccessLayer.Models;
 public class Manufacturer
 {
     [Key]
-    public string Id { get; set; } = string.Empty;
+    public int LeverancierId { get; set; }
     public string Naam { get; set; } = string.Empty;
 }

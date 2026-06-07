@@ -2,9 +2,87 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="alert-info">
-    <p class="p-1">
-        @* Met Chart.js hier grafieken tonen *@
-        Hele mooie grafieken
-    </p>
-</div>
+<h1>Welkom, Admin</h1>
+
+<section class="dashboard-meldingen-box">
+    <div class="dashboard-meldingen-header">
+        <h2>Oudste meldingen</h2>
+    </div>
+
+    <ul class="dashboard-meldingen-lijst">
+        <li class="dashboard-melding-item">
+            <div class="dashboard-melding-meta">
+                <strong>Retouren</strong>
+                <span>30-05-2026 09:15</span>
+            </div>
+            <p>Retour R-1042 wacht al 6 dagen op verwerking.</p>
+        </li>
+        <li class="dashboard-melding-item">
+            <div class="dashboard-melding-meta">
+                <strong>Orders</strong>
+                <span>31-05-2026 11:00</span>
+            </div>
+            <p>Order O-8831 staat sinds 4 dagen op 'In afwachting'.</p>
+        </li>
+        <li class="dashboard-melding-item">
+            <div class="dashboard-melding-meta">
+                <strong>Lage voorraad</strong>
+                <span>01-06-2026 08:45</span>
+            </div>
+            <p>Product USB-C kabel (SKU-3321) heeft nog 2 stuks.</p>
+        </li>
+        <li class="dashboard-melding-item">
+            <div class="dashboard-melding-meta">
+                <strong>Retouren</strong>
+                <span>02-06-2026 13:20</span>
+            </div>
+            <p>Retour R-1049 heeft geen toegewezen medewerker.</p>
+        </li>
+        <li class="dashboard-melding-item">
+            <div class="dashboard-melding-meta">
+                <strong>Orders</strong>
+                <span>03-06-2026 10:05</span>
+            </div>
+            <p>Order O-8845 mist nog betaalbevestiging.</p>
+        </li>
+    </ul>
+</section>
+
+<section class="dashboard-overzicht-rij" aria-label="Overzicht retouren voorraden en orders">
+    <article class="dashboard-overzicht-box">
+        <h3>Retouren</h3>
+        <div class="dashboard-overzicht-regel">
+            <span>Open retouren</span>
+            <strong>8</strong>
+        </div>
+        <div class="dashboard-overzicht-regel">
+            <span>In verwerking</span>
+            <strong>3</strong>
+        </div>
+    </article>
+
+    <article class="dashboard-overzicht-box">
+        <h3>Voorraden</h3>
+        <div class="dashboard-overzicht-regel">
+            <span>Producten met lage voorraad</span>
+            <strong>12</strong>
+        </div>
+        <div class="dashboard-overzicht-regel">
+            <span>Niet op voorraad</span>
+            <strong>4</strong>
+        </div>
+    </article>
+
+    <article class="dashboard-overzicht-box">
+        <h3>Orders</h3>
+        <div class="dashboard-overzicht-regel">
+            <span>Open orders</span>
+            <strong>15</strong>
+        </div>
+        <div class="dashboard-overzicht-regel">
+            <span>In verwerking</span>
+            <strong>6</strong>
+        </div>
+    </article>
+</section>
+
