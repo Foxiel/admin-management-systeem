@@ -1,69 +1,72 @@
-@model KE03_INTDEV_SE_2_Base.Models.OrderModel
+@model DataAccessLayer.Models.Order
 
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<div class="crud-container">
 
-<h4>Order</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+    <div class="crud-header">
+        <h1>Bestelling Bewerken</h1>
+    </div>
+
+    <hr />
+
+    <div class="form-wrapper">
         <form asp-action="Edit">
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="OrderId" />
+
+            <input type="hidden" asp-for="Id" />
+
             <div class="form-group">
-                <label asp-for="OrderDatum" class="control-label"></label>
-                <input asp-for="OrderDatum" class="form-control" />
-                <span asp-validation-for="OrderDatum" class="text-danger"></span>
+                <label asp-for="Klant.Naam" class="control-label">Klant naam</label>
+                <input asp-for="Klant.Naam" class="form-control" />
+                <span asp-validation-for="Klant.Naam" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="OrderStatus" class="control-label"></label>
-                <input asp-for="OrderStatus" class="form-control" />
-                <span asp-validation-for="OrderStatus" class="text-danger"></span>
+                <label asp-for="Klant.Email" class="control-label">Email</label>
+                <input asp-for="Klant.Email" class="form-control" />
+                <span asp-validation-for="Klant.Email" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="BetaalStatus" class="control-label"></label>
-                <input asp-for="BetaalStatus" class="form-control" />
-                <span asp-validation-for="BetaalStatus" class="text-danger"></span>
+                <label asp-for="Klant.Telefoonnr" class="control-label">Telefoon</label>
+                <input asp-for="Klant.Telefoonnr" class="form-control" />
+                <span asp-validation-for="Klant.Telefoonnr" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="Verzendkosten" class="control-label"></label>
-                <input asp-for="Verzendkosten" class="form-control" />
-                <span asp-validation-for="Verzendkosten" class="text-danger"></span>
+                <label asp-for="BestelDatum" class="control-label">Besteldatum</label>
+                <input asp-for="BestelDatum" class="form-control" type="date" />
+                <span asp-validation-for="BestelDatum" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <label asp-for="TotaalBedrag" class="control-label"></label>
-                <input asp-for="TotaalBedrag" class="form-control" />
-                <span asp-validation-for="TotaalBedrag" class="text-danger"></span>
+                <label asp-for="BestelStatus" class="control-label">Bestelstatus</label>
+                <input asp-for="BestelStatus" class="form-control" />
+                <span asp-validation-for="BestelStatus" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="KlantId" class="control-label"></label>
-                <input asp-for="KlantId" class="form-control" />
-                <span asp-validation-for="KlantId" class="text-danger"></span>
+
+            <!-- BUTTONS -->
+            <div class="form-actions">
+
+                <input type="submit" value="Opslaan" class="btn btn-primary" />
+
+                <a asp-action="Index" class="details-link">
+                    Terug
+                </a>
+
             </div>
-            <div class="form-group">
-                <label asp-for="ProductId" class="control-label"></label>
-                <input asp-for="ProductId" class="form-control" />
-                <span asp-validation-for="ProductId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Aantal" class="control-label"></label>
-                <input asp-for="Aantal" class="form-control" />
-                <span asp-validation-for="Aantal" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
+
         </form>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
