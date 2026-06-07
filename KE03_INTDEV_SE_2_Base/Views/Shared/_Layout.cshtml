@@ -9,53 +9,44 @@
     <link rel="stylesheet" href="~/KE03_INTDEV_SE_2_Base.styles.css" asp-append-version="true" />
 </head>
 <body>
+
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TERUG NAAR DE MATRIX</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Navigatie tonen/verbergen">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Startpagina</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Orders" asp-action="Index">Bestellingen</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Customers" asp-action="Index">Klanten</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Producten</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Index">Categorieën</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Leverancier" asp-action="Index">Leverancier</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+        <nav class="top-navbar">
+			<button id="menuToggle" class="hamburger-btn" type="button" aria-expanded="true">
+				☰
+			</button>
+            <a class="navbar-brand"
+               asp-controller="Home"
+               asp-action="Index">
+                TERUG NAAR DE MATRIX
+            </a>
         </nav>
     </header>
-    <div class="container site-content">
-        <main role="main" class="pb-3">
+   
+    <nav class="sidebar" id="sidebar">
+        <ul class="sidebar-list">
+            <li><a asp-controller="Home" asp-action="Index">Dashboard</a></li>
+                <li><a asp-controller="Orders" asp-action="Index">Dashboard</a></li>
+            <li><a asp-controller="Customers" asp-action="Index">Klanten</a></li>
+            <li><a asp-controller="Product" asp-action="Index">Producten</a></li>
+            <li><a asp-controller="Category" asp-action="Index">Categorieën</a></li>
+            <li><a asp-controller="Leverancier" asp-action="Index">Leveranciers</a></li>
+        </ul>
+    </nav>
+
+    </div>
+
+    <div class="main-content">
+        <main role="main">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - KE03_INTDEV_SE_2_Base
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/site.js"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

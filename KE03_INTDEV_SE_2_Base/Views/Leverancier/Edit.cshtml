@@ -4,31 +4,45 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<div class="crud-container">
 
-<h4>LeverancierModel</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+    <div class="crud-header">
+        <h1>Leverancier Bewerken</h1>
+    </div>
+
+    <hr />
+
+    <div class="form-wrapper">
         <form asp-action="Edit">
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <input type="hidden" asp-for="Id" />
+
             <div class="form-group">
                 <label asp-for="Naam" class="control-label"></label>
                 <input asp-for="Naam" class="form-control" />
                 <span asp-validation-for="Naam" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+
+            <!-- BUTTONS -->
+            <div class="form-actions">
+
+                <input type="submit" value="Opslaan" class="btn btn-primary" />
+
+                <a asp-action="Index" class="details-link">
+                    Terug
+                </a>
+
             </div>
+
         </form>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
