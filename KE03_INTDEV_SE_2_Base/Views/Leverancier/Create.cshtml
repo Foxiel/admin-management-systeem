@@ -4,27 +4,34 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<div class="crud-container">
 
-<h4>LeverancierModel</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <h1 class="crud-title">Nieuwe Leverancier</h1>
 
-            <div class="form-group">
-                <label asp-for="Naam" class="control-label"></label>
-                <input asp-for="Naam" class="form-control" />
-                <span asp-validation-for="Naam" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+    <form asp-action="Create">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="Naam" class="control-label"></label>
+            <input asp-for="Naam" class="form-control" />
+            <span asp-validation-for="Naam" class="text-danger"></span>
+        </div>
+
+        <div class="form-actions">
+            <input type="submit" value="Opslaan" class="btn btn-success" />
+
+            <a asp-action="Index" class="details-link">
+                Terug
+            </a>
+        </div>
+
+    </form>
+
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

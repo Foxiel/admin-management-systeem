@@ -16,6 +16,7 @@ namespace KE03_INTDEV_SE_2_Base
             builder.Services.AddScoped<DataAccessLayer.Repositories.CustomerRepository>();
             builder.Services.AddScoped<DataAccessLayer.Repositories.CategoryRespository>();
             builder.Services.AddScoped<DataAccessLayer.Repositories.ProductRepository>();
+            builder.Services.AddScoped<DataAccessLayer.Repositories.LeverancierRepository>();
 
             builder.Services.AddControllersWithViews();
             
