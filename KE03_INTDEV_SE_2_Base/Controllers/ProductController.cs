@@ -210,7 +210,13 @@ public class ProductController : Controller
         Garantie = d.Garantie,
         HuidigeVoorraad = d.HuidigeVoorraad,
         MinimumVoorraad = d.MinimumVoorraad,
-        Status = d.Status
+        Status = d.Status,
+        // Populate free-text / display location fields so Edit view can show Gang/Schap/Vak
+        LeverancierNaam = d.Leverancier?.Naam ?? string.Empty,
+        LocatieNaam = d.Locatie?.Naam ?? string.Empty,
+        LocatieGang = d.Locatie?.Gang ?? string.Empty,
+        LocatieSchap = d.Locatie?.Schap ?? string.Empty,
+        LocatieVak = d.Locatie?.Vak ?? string.Empty
     };
 
     #endregion

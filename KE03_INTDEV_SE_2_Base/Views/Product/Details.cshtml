@@ -1,21 +1,50 @@
 ﻿@model KE03_INTDEV_SE_2_Base.Controllers.ProductController.ProductEditModel
+
 @{
     ViewData["Title"] = "Product details";
 }
 
-<h1>Product details</h1>
+<div class="crud-container product-page">
+    <h1 class="crud-title">Product details</h1>
 
-<div class="mb-2"><strong>EAN:</strong> @Model.EAN</div>
-<div class="mb-2"><strong>Naam:</strong> @Model.Naam</div>
-<div class="mb-2"><strong>Leverancier:</strong> @Model.LeverancierNaam</div>
-<div class="mb-2"><strong>Locatie:</strong> @Model.LocatieNaam</div>
-<div class="mb-2"><strong>Prijs:</strong> @Model.Prijs.ToString("C")</div>
-<div class="mb-2"><strong>Gewicht:</strong> @Model.Gewicht</div>
-<div class="mb-2"><strong>Huidige voorraad:</strong> @Model.HuidigeVoorraad</div>
-<div class="mb-2"><strong>Minimum voorraad:</strong> @Model.MinimumVoorraad</div>
-<div class="mb-2"><strong>Garantie:</strong> @Model.Garantie</div>
-<div class="mb-2"><strong>Status:</strong> @Model.Status</div>
-<div class="mb-2"><strong>Beschrijving:</strong><div class="border p-2">@Model.Beschrijving</div></div>
+    <dl class="row">
+        <dt class="col-sm-3">EAN</dt>
+        <dd class="col-sm-9">@Model.EAN</dd>
 
-<a asp-controller="Product" asp-action="Edit" asp-route-id="@Model.ProductId" class="btn btn-primary">Bewerken</a>
-<a asp-controller="Product" asp-action="Index" class="btn btn-secondary ms-2">Terug naar lijst</a>
+        <dt class="col-sm-3">Naam</dt>
+        <dd class="col-sm-9">@Model.Naam</dd>
+
+        <dt class="col-sm-3">Leverancier</dt>
+        <dd class="col-sm-9">@Model.LeverancierNaam</dd>
+
+        <dt class="col-sm-3">Beschrijving</dt>
+        <dd class="col-sm-9">@Model.Beschrijving</dd>
+
+        <dt class="col-sm-3">Locatie</dt>
+        <dd class="col-sm-9">@Model.LocatieNaam</dd>
+
+        <dt class="col-sm-3">Prijs</dt>
+        <dd class="col-sm-9">@Model.Prijs.ToString("C")</dd>
+
+        <dt class="col-sm-3">Huidige voorraad</dt>
+        <dd class="col-sm-9">@Model.HuidigeVoorraad</dd>
+
+        <dt class="col-sm-3">Minimum voorraad</dt>
+        <dd class="col-sm-9">@Model.MinimumVoorraad</dd>
+
+        <dt class="col-sm-3">Status</dt>
+        <dd class="col-sm-9">@Model.Status</dd>
+    </dl>
+
+    <!-- Buttons placed under the details and left aligned -->
+    <div class="mt-3 d-flex justify-content-start align-items-center gap-2">
+        <a asp-controller="Product" asp-action="Edit" asp-route-id="@Model.ProductId" class="crud-icon-btn icon-only edit-btn" title="Bewerken">
+            <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                      d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z" />
+            </svg>
+        </a>
+
+        <a asp-controller="Product" asp-action="Index" class="details-link">Terug</a>
+    </div>
+</div>

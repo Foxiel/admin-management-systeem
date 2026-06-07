@@ -697,3 +697,24 @@ a:hover {
     }
 }
 
+/* Product-page specific overrides (add near end of file) */
+.product-page .action-buttons {
+    width: auto !important;
+    min-width: 0 !important;
+    justify-content: flex-start !important;
+    gap: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.product-page .crud-icon-btn.icon-only {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+}
+
+.product-page .details-link,
+.product-page .edit-btn {
+    padding: 8px 12px;
+}
+
