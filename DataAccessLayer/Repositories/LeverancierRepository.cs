@@ -10,7 +10,7 @@ namespace DataAccessLayer.Repositories
 {
     public class LeverancierRepository : BaseDAL
     {
-        public LeverancierRepository(IConfiguration configuration) : base(configuration)
+        public LeverancierRepository()
         {
         }
 

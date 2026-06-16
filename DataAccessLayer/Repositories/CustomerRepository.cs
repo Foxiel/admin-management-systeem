@@ -10,7 +10,7 @@ namespace DataAccessLayer.Repositories
 {
     public class CustomerRepository : BaseDAL
     {
-        public CustomerRepository(IConfiguration configuration) : base(configuration)
+        public CustomerRepository()
         {
         }
 

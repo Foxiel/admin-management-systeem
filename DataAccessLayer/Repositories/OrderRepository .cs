@@ -9,7 +9,7 @@ namespace DataAccessLayer.Repositories
 {
     public class OrderRepository : BaseDAL
     {
-        public OrderRepository(IConfiguration configuration) : base(configuration)
+        public OrderRepository()
         {
         }
 

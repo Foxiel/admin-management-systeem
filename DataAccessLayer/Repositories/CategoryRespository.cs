@@ -8,7 +8,7 @@ namespace DataAccessLayer.Repositories;
 
 public class CategoryRespository : BaseDAL
 {
-    public CategoryRespository(IConfiguration configuration) : base(configuration)
+    public CategoryRespository()
     {
     }
 

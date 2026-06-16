@@ -10,9 +10,6 @@ namespace KE03_INTDEV_SE_2_Base
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            builder.Services.AddDbContext<appDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("Connection")));
-
             builder.Services.AddScoped<DataAccessLayer.Repositories.CustomerRepository>();
             builder.Services.AddScoped<DataAccessLayer.Repositories.CategoryRespository>();
             builder.Services.AddScoped<DataAccessLayer.Repositories.ProductRepository>();
