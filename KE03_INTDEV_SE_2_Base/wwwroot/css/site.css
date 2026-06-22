@@ -833,3 +833,7 @@ a:hover {
     .main-content.expanded {
         margin-left: 0 !important;
     }
+
+#TableBody tr.is-hidden {
+    display: none;
+}

@@ -1,7 +1,9 @@
+@* Zoekbalk is aangepast door Fabian *@
+
 @model IEnumerable<DataAccessLayer.Models.Leverancier>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Leverancier";
 }
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -22,12 +24,13 @@
             </a>
         </div>
 
-        <form asp-action="Index" method="get" class="search-form">
+        <div class="search mb-3">
             <input type="text"
-                   id="leverancierSearch"
                    class="search-input"
-                   placeholder="Zoeken in leveranciers..." />
-        </form>
+                   placeholder="Zoek op alle gegevens..."
+                   data-table-search
+                   data-table-search-target="#TableBody" />
+        </div>
 
     </div>
 
@@ -36,47 +39,47 @@
     <div class="table-wrapper">
         <table class="table">
             <thead>
-                <tr>
-                    <th>@Html.DisplayNameFor(model => model.Naam)</th>
-                    <th>Acties</th>
-                </tr>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Naam)</th>
+                <th>Acties</th>
+            </tr>
             </thead>
 
-            <tbody id="leverancierTable">
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@Html.DisplayFor(modelItem => item.Naam)</td>
+            <tbody id="TableBody">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Naam)</td>
 
-                        <td class="action-buttons">
+                    <td class="action-buttons">
 
-                            <a asp-action="Edit"
-                               asp-route-id="@item.Id"
-                               class="crud-icon-btn icon-only edit-btn">
-                                <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                                          d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z" />
-                                </svg>
-                            </a>
+                        <a asp-action="Edit"
+                           asp-route-id="@item.Id"
+                           class="crud-icon-btn icon-only edit-btn">
+                            <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                                      d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z" />
+                            </svg>
+                        </a>
 
-                            <a asp-action="Delete"
-                               asp-route-id="@item.Id"
-                               class="crud-icon-btn icon-only delete-btn">
-                                <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                                          d="M3 6h18M8 6V4h8v2M6 6l1 14a2 2 0 002 2h6a2 2 0 002-2l1-14" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                                          d="M10 11v6M14 11v6" />
-                                </svg>
-                            </a>
+                        <a asp-action="Delete"
+                           asp-route-id="@item.Id"
+                           class="crud-icon-btn icon-only delete-btn">
+                            <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                                      d="M3 6h18M8 6V4h8v2M6 6l1 14a2 2 0 002 2h6a2 2 0 002-2l1-14" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                                      d="M10 11v6M14 11v6" />
+                            </svg>
+                        </a>
 
-                        </td>
-                    </tr>
-                }
+                    </td>
+                </tr>
+            }
             </tbody>
         </table>
     </div>
 
 </div>
 
-
+<script src="~/js/searchbar.js" asp-append-version="true"></script>
