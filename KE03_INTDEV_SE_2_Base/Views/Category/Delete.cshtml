@@ -6,24 +6,68 @@
     ViewData["Title"] = "Delete";
 }
 
-<h1>Categorie verwijderen</h1>
+<div class="angry-mode crud-container ">
 
-<h3>Weet je zeker dat je deze categorie wilt verwijderen?</h3>
-<div>
-    <h4>Categorie</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Naam)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Naam)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+    <h1 class="crud-title">
+        Categorie Verwijderen
+    </h1>
+
+    <h3>
+        Weet je zeker dat je dit wilt verwijderen?
+    </h3>
+
+    <div>
+
+        <h4>Categorie</h4>
+
+        <hr />
+
+        <dl class="row">
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Naam)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Naam)
+            </dd>
+
+        </dl>
+
+        <form asp-action="Delete" id="deleteForm">
+
+            <input type="hidden" asp-for="Id" />
+
+            <button type="button" class="btn btn-danger" onclick="openModal()">
+                Verwijderen
+            </button>
+            |
+
+            <a asp-action="Index" class="details-link">
+                Terug naar Lijst
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+<div id="deleteModal" class="modal-overlay">
+    <div class="modal-box angry-mode">
+
+        <h2>Weet je het zeker?</h2>
+        <p>Deze categorie wordt permanent verwijderd.</p>
+
+        <div class="modal-actions">
+
+            <button type="button" class="details-link" onclick="closeModal()">
+                Annuleren
+            </button>
+
+            <button type="button" class="btn btn-danger" onclick="confirmDelete()">
+                Verwijderen
+            </button>
+
+        </div>
+    </div>
 </div>

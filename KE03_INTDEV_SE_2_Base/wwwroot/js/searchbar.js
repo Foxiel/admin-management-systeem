@@ -1,6 +1,6 @@
 (() => {
-    const input = document.getElementById('categorySearch');
-    const rows = document.querySelectorAll('#categoryTableBody tr');
+    const input = document.getElementById('Search');
+    const rows = document.querySelectorAll('#TableBody tr');
 
     if (!input || rows.length === 0) {
         return;
@@ -15,4 +15,3 @@
         });
     });
 })();
-
