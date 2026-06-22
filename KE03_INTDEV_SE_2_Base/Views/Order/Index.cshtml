@@ -1,3 +1,6 @@
+@* Zoekbalk is aangepast door Fabian *@
+
+
 @model IEnumerable<DataAccessLayer.Models.Order>
 
 @{
@@ -36,20 +39,18 @@
             </a>
         </div>
 
-        <div class="search-form">
-            <form id="searchForm" method="get" class="d-flex align-items-center" style="gap:8px;">
-                <input type="text" id="q" name="q" class="search-input" placeholder="Zoek klant (naam, email, telefoon)..." value="@Context.Request.Query["q"]" />
-                <input type="hidden" id="klantNaam" name="klantNaam" value="@Context.Request.Query["klantNaam"]" />
-                <input type="hidden" id="klantEmail" name="klantEmail" value="@Context.Request.Query["klantEmail"]" />
-                <input type="hidden" id="klantTelefoon" name="klantTelefoon" value="@Context.Request.Query["klantTelefoon"]" />
-                <button type="submit" class="details-link">Zoek</button>
-                <button type="button" id="filterToggle" class="details-link ms-2">Filters</button>
-            </form>
+        <div class="search mb-3">
+            <input type="text"
+                   class="search-input"
+                   placeholder="Zoek op alle gegevens..."
+                   data-table-search
+                   data-table-search-target="#TableBody" />
+            <button type="button" id="filterToggle" class="details-link ms-2">Filters</button>
         </div>
     </div>
 
     <hr />
-
+    
     <div id="advancedFilters" class="mb-3" style="display:none;">
         <form method="get" class="row g-2 align-items-end" id="filterForm">
             <div class="col-md-3">
@@ -83,7 +84,7 @@
                     <th class="col-actions">Acties</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="TableBody">
                 @foreach (var item in Model)
                 {
                     <tr>
@@ -144,3 +145,6 @@
         })();
     </script>
 }
+
+<script src="~/js/searchbar.js" asp-append-version="true"></script>
+

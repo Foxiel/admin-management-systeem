@@ -1,4 +1,6 @@
-﻿@model IEnumerable<KE03_INTDEV_SE_2_Base.Controllers.ProductController.ProductListItem>
+﻿@* Zoekbalk is aangepast door Fabian *@
+
+@model IEnumerable<KE03_INTDEV_SE_2_Base.Controllers.ProductController.ProductListItem>
 
 @{
     ViewData["Title"] = "Producten";
@@ -62,11 +64,13 @@
             </a>
         </div>
 
-        <div class="search-form">
-            <form method="get" class="d-flex align-items-center" style="gap:8px;">
-                <input type="text" name="naam" class="search-input" placeholder="Zoeken op naam..." value="@Context.Request.Query["naam"]" />
-                <button type="button" id="filterToggle" class="details-link">Filters</button>
-            </form>
+        <div class="search mb-3">
+            <input type="text"
+                   class="search-input"
+                   placeholder="Zoek op alle gegevens..."
+                   data-table-search
+                   data-table-search-target="#TableBody" />
+            <button type="button" id="filterToggle" class="details-link">Filters</button>
         </div>
     </div>
 
@@ -132,7 +136,7 @@
                     <th class="col-actions">Acties</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="TableBody">
                 @foreach (var item in Model)
                 {
                     <tr>
@@ -191,3 +195,5 @@
         })();
     </script>
 }
+
+<script src="~/js/searchbar.js" asp-append-version="true"></script>

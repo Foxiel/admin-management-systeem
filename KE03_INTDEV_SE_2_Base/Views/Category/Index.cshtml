@@ -27,9 +27,10 @@
 
         <div class="search mb-3">
             <input type="text"
-                   id="Search"
                    class="search-input"
-                   placeholder="Zoek op categorienaam" />
+                   placeholder="Zoek op alle gegevens..."
+                   data-table-search
+                   data-table-search-target="#TableBody" />
         </div>
 
     </div>
@@ -48,7 +49,7 @@
             <tbody id="TableBody">
                 @foreach (var item in Model)
                 {
-                    <tr data-category-name="@item.Naam">
+                    <tr>
                         <td>@Html.DisplayFor(modelItem => item.Naam)</td>
 
                         <td class="action-buttons">
