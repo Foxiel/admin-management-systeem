@@ -1,0 +1,119 @@
+﻿@model DataAccessLayer.Models.SendOrder
+
+@{
+    ViewData["Title"] = "Verzending aanmaken";
+}
+
+<div class="crud-container">
+    <h1 class="crud-title">Verzending aanmaken</h1>
+
+    <p class="crud-subtitle">
+        Maak een verzending aan voor bestelling #@Model.BestellingId.
+    </p>
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="matrix-card">
+        <h3>Bestelling gegevens</h3>
+
+        <dl class="row">
+            <dt class="col-sm-3">Bestelling ID</dt>
+            <dd class="col-sm-9">#@Model.BestellingId</dd>
+
+            <dt class="col-sm-3">Klant</dt>
+            <dd class="col-sm-9">@Model.KlantNaam</dd>
+
+            <dt class="col-sm-3">Email</dt>
+            <dd class="col-sm-9">@Model.KlantEmail</dd>
+
+            <dt class="col-sm-3">Telefoon</dt>
+            <dd class="col-sm-9">@Model.KlantTelefoon</dd>
+
+            <dt class="col-sm-3">Adres</dt>
+            <dd class="col-sm-9">
+                @Model.Adres<br />
+                @Model.Postcode @Model.Woonplaats<br />
+                @Model.Land
+            </dd>
+
+            <dt class="col-sm-3">Orderdatum</dt>
+            <dd class="col-sm-9">@Model.OrderDatum.ToString("dd-MM-yyyy")</dd>
+
+            <dt class="col-sm-3">Status</dt>
+            <dd class="col-sm-9">@Model.OrderStatus</dd>
+        </dl>
+    </div>
+
+    <br />
+
+    <form asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
+
+        <input type="hidden" asp-for="BestellingId" />
+        <input type="hidden" asp-for="KlantId" />
+        <input type="hidden" asp-for="KlantNaam" />
+        <input type="hidden" asp-for="KlantEmail" />
+        <input type="hidden" asp-for="KlantTelefoon" />
+        <input type="hidden" asp-for="Adres" />
+        <input type="hidden" asp-for="Postcode" />
+        <input type="hidden" asp-for="Woonplaats" />
+        <input type="hidden" asp-for="Land" />
+        <input type="hidden" asp-for="OrderDatum" />
+        <input type="hidden" asp-for="OrderStatus" />
+
+        <div class="form-group">
+            <label asp-for="BezorgerId" class="control-label">Bezorger</label>
+            <select asp-for="BezorgerId" class="form-control">
+                <option value="">-- Kies een bezorger --</option>
+                @foreach (var bezorger in Model.Bezorgers)
+                {
+                    <option value="@bezorger.Id">@bezorger.Naam</option>
+                }
+            </select>
+            <span asp-validation-for="BezorgerId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="LeverDatum" class="control-label">Leverdatum</label>
+            <input asp-for="LeverDatum" type="date" class="form-control" />
+            <span asp-validation-for="LeverDatum" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="LeverTijd" class="control-label">Levertijd</label>
+            <input asp-for="LeverTijd" type="time" class="form-control" />
+            <span asp-validation-for="LeverTijd" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Status" class="control-label">Bezorgstatus</label>
+            <select asp-for="Status" class="form-control">
+                @foreach (var status in Model.Statussen)
+                {
+                    <option value="@status.Id">@status.Naam</option>
+                }
+            </select>
+            <span asp-validation-for="Status" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="TrackTraceCode" class="control-label">Track & trace code</label>
+            <input asp-for="TrackTraceCode" class="form-control" />
+            <span asp-validation-for="TrackTraceCode" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-success">
+            Verzending aanmaken
+        </button>
+
+        <a asp-controller="SendOrder" asp-action="Index" class="details-link">
+            Terug
+        </a>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
