@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories;
 
-public class ProductRepository : BaseDAL
+public class ProductRepository : dbContext
 {
     public ProductRepository()
     {

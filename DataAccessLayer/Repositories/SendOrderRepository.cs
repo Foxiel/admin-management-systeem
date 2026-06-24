@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories
 {
-    public class SendOrderRepository : BaseDAL
+    public class SendOrderRepository : dbContext
     {
         public async Task<List<SendOrder>> GetOrdersToSendAsync()
         {

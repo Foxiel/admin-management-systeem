@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace DataAccessLayer.Repositories;
 
-public class CategoryRespository : BaseDAL
+public class CategoryRespository : dbContext
 {
     public CategoryRespository()
     {

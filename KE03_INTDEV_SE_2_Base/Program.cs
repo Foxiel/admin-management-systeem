@@ -10,12 +10,12 @@ namespace KE03_INTDEV_SE_2_Base
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            builder.Services.AddScoped<DataAccessLayer.Repositories.CustomerRepository>();
-            builder.Services.AddScoped<DataAccessLayer.Repositories.CategoryRespository>();
-            builder.Services.AddScoped<DataAccessLayer.Repositories.ProductRepository>();
-            builder.Services.AddScoped<DataAccessLayer.Repositories.OrderRepository>();
-            builder.Services.AddScoped<DataAccessLayer.Repositories.LeverancierRepository>();
-            builder.Services.AddScoped<DataAccessLayer.Repositories.SendOrderRepository>();
+            builder.Services.AddScoped<CustomerRepository>();
+            builder.Services.AddScoped<CategoryRespository>();
+            builder.Services.AddScoped<ProductRepository>();
+            builder.Services.AddScoped<OrderRepository>();
+            builder.Services.AddScoped<LeverancierRepository>();
+            builder.Services.AddScoped<SendOrderRepository>();
 
             builder.Services.AddControllersWithViews();
 

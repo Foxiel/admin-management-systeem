@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories
 {
-    public class OrderRepository : BaseDAL
+    public class OrderRepository : dbContext
     {
         public OrderRepository()
         {

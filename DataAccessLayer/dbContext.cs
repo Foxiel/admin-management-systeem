@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace DataAccessLayer
 {
-    public abstract class BaseDAL
+    public abstract class dbContext
     {
         private readonly string _connectionString = @"Server=tcp:sql.bsite.net\MSSQL2016;Database=coldfire0412_MatrixInc;User ID=coldfire0412_MatrixInc;Password=4LZC#jz5wCk^3kY;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;";
 
