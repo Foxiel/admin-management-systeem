@@ -1,4 +1,4 @@
-﻿@model DataAccessLayer.Models.SendOrder
+@model DataAccessLayer.Models.SendOrder
 
 @{
     ViewData["Title"] = "Verzending aanmaken";
@@ -37,16 +37,18 @@
             </dd>
 
             <dt class="col-sm-3">Orderdatum</dt>
-            <dd class="col-sm-9">@Model.OrderDatum.ToString("dd-MM-yyyy")</dd>
+            <dd class="col-sm-9">
+                @(Model.OrderDatum == DateTime.MinValue ? "" : Model.OrderDatum.ToString("dd-MM-yyyy"))
+            </dd>
 
-            <dt class="col-sm-3">Status</dt>
+            <dt class="col-sm-3">Orderstatus</dt>
             <dd class="col-sm-9">@Model.OrderStatus</dd>
         </dl>
     </div>
 
     <br />
 
-    <form asp-action="Create" method="post">
+    <form asp-action="CreateShipment" method="post">
         @Html.AntiForgeryToken()
 
         <input type="hidden" asp-for="BestellingId" />
@@ -80,20 +82,9 @@
         </div>
 
         <div class="form-group">
-            <label asp-for="LeverTijd" class="control-label">Levertijd</label>
+            <label asp-for="LeverTijd" class="control-label">Geschatte levertijd</label>
             <input asp-for="LeverTijd" type="time" class="form-control" />
             <span asp-validation-for="LeverTijd" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-            <label asp-for="Status" class="control-label">Bezorgstatus</label>
-            <select asp-for="Status" class="form-control">
-                @foreach (var status in Model.Statussen)
-                {
-                    <option value="@status.Id">@status.Naam</option>
-                }
-            </select>
-            <span asp-validation-for="Status" class="text-danger"></span>
         </div>
 
         <div class="form-group">
@@ -102,13 +93,17 @@
             <span asp-validation-for="TrackTraceCode" class="text-danger"></span>
         </div>
 
-        <button type="submit" class="btn btn-success">
-            Verzending aanmaken
-        </button>
+        <div class="form-actions mt-3">
+            <button type="submit" class="details-link">
+                Verzending aanmaken
+            </button>
 
-        <a asp-controller="SendOrder" asp-action="Index" class="details-link">
-            Terug
-        </a>
+            <a asp-action="Details"
+               asp-route-orderid="@Model.BestellingId"
+               class="details-link ms-2">
+                Terug
+            </a>
+        </div>
     </form>
 </div>
 

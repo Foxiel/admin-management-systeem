@@ -5,7 +5,6 @@
 }
 
 <div class="crud-container">
-
     <div class="crud-header">
         <h1>Bestelling Bewerken</h1>
     </div>
@@ -13,11 +12,13 @@
     <hr />
 
     <div class="form-wrapper">
-        <form asp-action="Edit">
+        <form asp-action="Edit" asp-route-orderid="@Model.Id" method="post">
+            @Html.AntiForgeryToken()
 
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Klant.Id" />
 
             <div class="form-group">
                 <label asp-for="Klant.Naam" class="control-label">Klant naam</label>
@@ -45,24 +46,23 @@
 
             <div class="form-group">
                 <label asp-for="BestelStatus" class="control-label">Bestelstatus</label>
-                <input asp-for="BestelStatus" class="form-control" />
+                <select asp-for="BestelStatus" class="form-control">
+                    <option value="Bestelling ontvangen">Bestelling ontvangen</option>
+                    <option value="Bestelling wordt gepicked">Bestelling wordt gepicked</option>
+                    <option value="Klaar voor verzending">Klaar voor verzending</option>
+                    <option value="Onderweg">Onderweg</option>
+                    <option value="Afgeleverd">Afgeleverd</option>
+                    <option value="Vertraagd">Vertraagd</option>
+                </select>
                 <span asp-validation-for="BestelStatus" class="text-danger"></span>
             </div>
 
-            <!-- BUTTONS -->
             <div class="form-actions">
-
                 <input type="submit" value="Opslaan" class="btn btn-primary" />
-
-                <a asp-action="Index" class="details-link">
-                    Terug
-                </a>
-
+                <a asp-action="Index" class="details-link">Terug</a>
             </div>
-
         </form>
     </div>
-
 </div>
 
 @section Scripts {

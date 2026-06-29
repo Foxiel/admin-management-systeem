@@ -15,7 +15,6 @@ namespace KE03_INTDEV_SE_2_Base
             builder.Services.AddScoped<ProductRepository>();
             builder.Services.AddScoped<OrderRepository>();
             builder.Services.AddScoped<LeverancierRepository>();
-            builder.Services.AddScoped<SendOrderRepository>();
 
             builder.Services.AddControllersWithViews();
 

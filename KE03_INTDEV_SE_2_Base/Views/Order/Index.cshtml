@@ -1,6 +1,3 @@
-@* Zoekbalk is aangepast door Fabian *@
-
-
 @model IEnumerable<DataAccessLayer.Models.Order>
 
 @{
@@ -10,141 +7,348 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-    /* small view-local adjustments */
-    .truncate { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; display: block; max-width: 100%; }
-    table.table { table-layout: fixed; }
-    .col-orderid { width: 8%; }
-    .col-klantnaam { width: 22%; }
-    .col-klantemail { width: 22%; }
-    .col-klantphone { width: 12%; }
-    .col-count { width: 8%; text-align:center; }
-    .col-datum { width: 12%; }
-    .col-status { width: 10%; }
-    .col-actions { width: 6%; min-width:90px; text-align:center; }
-    .action-buttons { gap:8px; display:flex; align-items:center; justify-content:flex-end; }
-    .crud-icon-btn.icon-only { width:40px; height:40px; padding:0; }
+    .truncate {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        display: block;
+        max-width: 100%;
+    }
+
+    table.table {
+        table-layout: fixed;
+    }
+
+    .col-orderid {
+        width: 8%;
+    }
+
+    .col-klantnaam {
+        width: 22%;
+    }
+
+    .col-klantemail {
+        width: 22%;
+    }
+
+    .col-klantphone {
+        width: 12%;
+    }
+
+    .col-count {
+        width: 8%;
+        text-align: center;
+    }
+
+    .col-datum {
+        width: 12%;
+    }
+
+    .col-status {
+        width: 12%;
+    }
+
+    .col-actions {
+        width: 8%;
+        min-width: 90px;
+        text-align: center;
+    }
+
+    .action-buttons {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .crud-icon-btn.icon-only {
+        width: 40px;
+        height: 40px;
+        padding: 0;
+    }
 </style>
 
 <div class="crud-container">
+
     <div class="crud-header">
+
         <div class="header-left">
+
             <h1 class="crud-title">Bestellingen</h1>
 
             <a asp-action="Create" class="details-link create-link">
-                <svg class="icon-svg plus-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" fill="none" />
-                    <path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                <svg class="icon-svg plus-icon"
+                     xmlns="http://www.w3.org/2000/svg"
+                     viewBox="0 0 24 24">
+                    <circle cx="12"
+                            cy="12"
+                            r="9"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            fill="none" />
+
+                    <path d="M12 8v8M8 12h8"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round" />
                 </svg>
+
                 Nieuwe Bestelling
             </a>
+
         </div>
 
         <div class="search mb-3">
+
             <input type="text"
                    class="search-input"
                    placeholder="Zoek op alle gegevens..."
                    data-table-search
                    data-table-search-target="#TableBody" />
-            <button type="button" id="filterToggle" class="details-link ms-2">Filters</button>
+
+            <button id="filterToggle"
+                    type="button"
+                    class="details-link ms-2">
+                Filters
+            </button>
+
         </div>
+
     </div>
 
     <hr />
-    
-    <div id="advancedFilters" class="mb-3" style="display:none;">
-        <form method="get" class="row g-2 align-items-end" id="filterForm">
+
+    <div id="advancedFilters"
+         class="mb-3"
+         style="display:none;">
+
+        <form method="get"
+              class="row g-2 align-items-end">
+
             <div class="col-md-3">
-                <label class="form-label small">Besteldatum</label>
-                <input class="form-control" type="date" name="bestelDatum" value="@Context.Request.Query["bestelDatum"]" />
+
+                <label class="form-label small">
+                    Besteldatum
+                </label>
+
+                <input type="date"
+                       class="form-control"
+                       name="bestelDatum"
+                       value="@Context.Request.Query["bestelDatum"]" />
+
             </div>
 
             <div class="col-md-3">
-                <label class="form-label small">Bestelstatus</label>
-                <input class="form-control" name="bestelStatus" value="@Context.Request.Query["bestelStatus"]" />
+
+                <label class="form-label small">
+                    Bestelstatus
+                </label>
+
+                <select class="form-control"
+                        name="bestelStatus">
+
+                    <option value="">Alle statussen</option>
+
+                    <option value="Bestelling ontvangen"
+                            selected="@(Context.Request.Query["bestelStatus"] == "Bestelling ontvangen")">
+                        Bestelling ontvangen
+                    </option>
+
+                    <option value="Bestelling wordt gepicked"
+                            selected="@(Context.Request.Query["bestelStatus"] == "Bestelling wordt gepicked")">
+                        Bestelling wordt gepicked
+                    </option>
+
+                    <option value="onderweg"
+                            selected="@(Context.Request.Query["bestelStatus"] == "onderweg")">
+                        Onderweg
+                    </option>
+
+                    <option value="afgeleverd"
+                            selected="@(Context.Request.Query["bestelStatus"] == "afgeleverd")">
+                        Afgeleverd
+                    </option>
+
+                </select>
+
             </div>
 
-            <div class="col-md-6 d-flex align-items-end" style="gap:8px;">
-                <button type="submit" class="details-link">Filter</button>
-                <a asp-action="Index" class="details-link ms-2">Reset</a>
+            <div class="col-md-6 d-flex align-items-end"
+                 style="gap:8px;">
+
+                <button type="submit"
+                        class="details-link">
+                    Filter
+                </button>
+
+                <a asp-action="Index"
+                   class="details-link ms-2">
+                    Reset
+                </a>
+
             </div>
+
         </form>
+
     </div>
 
     <div class="table-wrapper">
+
         <table class="table">
+
             <thead>
+
                 <tr>
-                    <th class="col-orderid">Order ID</th>
-                    <th class="col-klantnaam">Klant - Naam</th>
-                    <th class="col-klantemail">Klant - Email</th>
-                    <th class="col-klantphone">Klant - Telefoon</th>
-                    <th class="col-count">Aantal</th>
-                    <th class="col-datum">Besteldatum</th>
-                    <th class="col-status">Bestelstatus</th>
-                    <th class="col-actions">Acties</th>
+
+                    <th class="col-orderid">
+                        Order ID
+                    </th>
+
+                    <th class="col-klantnaam">
+                        Klant - Naam
+                    </th>
+
+                    <th class="col-klantemail">
+                        Klant - Email
+                    </th>
+
+                    <th class="col-klantphone">
+                        Klant - Telefoon
+                    </th>
+
+                    <th class="col-count">
+                        Aantal
+                    </th>
+
+                    <th class="col-datum">
+                        Besteldatum
+                    </th>
+
+                    <th class="col-status">
+                        Bestelstatus
+                    </th>
+
+                    <th class="col-actions">
+                        Acties
+                    </th>
+
                 </tr>
+
             </thead>
+
             <tbody id="TableBody">
+
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td class="col-orderid">@item.Id</td>
-                        <td class="col-klantnaam"><span class="truncate">@item.Klant?.Naam</span></td>
-                        <td class="col-klantemail"><span class="truncate">@item.Klant?.Email</span></td>
-                        <td class="col-klantphone"><span class="truncate">@item.Klant?.Telefoonnr</span></td>
-                        <td class="col-count">@((item.Producten?.Count) ?? 0)</td>
-                        <td class="col-datum">@((item.BestelDatum == DateTime.MinValue) ? "" : item.BestelDatum.ToString("yyyy-MM-dd"))</td>
-                        <td class="col-status">@item.BestelStatus</td>
-                        <td class="col-actions action-buttons">
-                            <a asp-action="Details" asp-route-orderid="@item.Id" class="details-link">Details</a>
-                            <a asp-action="Edit" asp-route-orderid="@item.Id" class="crud-icon-btn icon-only edit-btn" title="Bewerken">
-                                <svg class="icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                                          d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z" />
-                                </svg>
-                            </a>
-                            @* Delete removed from index to prevent accidental deletion *@
+
+                        <td class="col-orderid">
+                            @item.Id
                         </td>
+
+                        <td class="col-klantnaam">
+                            <span class="truncate">
+                                @item.Klant?.Naam
+                            </span>
+                        </td>
+
+                        <td class="col-klantemail">
+                            <span class="truncate">
+                                @item.Klant?.Email
+                            </span>
+                        </td>
+
+                        <td class="col-klantphone">
+                            <span class="truncate">
+                                @item.Klant?.Telefoonnr
+                            </span>
+                        </td>
+
+                        <td class="col-count">
+                            @(item.Producten?.Count ?? 0)
+                        </td>
+
+                        <td class="col-datum">
+                            @(item.BestelDatum == DateTime.MinValue ? "" : item.BestelDatum.ToString("yyyy-MM-dd"))
+                        </td>
+
+                        <td class="col-status">
+                            @item.BestelStatus
+                        </td>
+
+                        <td class="col-actions action-buttons">
+
+                            <a asp-action="Details"
+                               asp-route-orderid="@item.Id"
+                               class="details-link">
+                                Details
+                            </a>
+
+                            <a asp-action="Edit"
+                               asp-route-orderid="@item.Id"
+                               class="crud-icon-btn icon-only edit-btn"
+                               title="Bewerken">
+
+                                <svg class="icon-svg"
+                                     xmlns="http://www.w3.org/2000/svg"
+                                     viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke="currentColor">
+
+                                    <path stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                          stroke-width="1.8"
+                                          d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z" />
+
+                                </svg>
+
+                            </a>
+
+                        </td>
+
                     </tr>
                 }
+
             </tbody>
+
         </table>
+
     </div>
+
 </div>
 
 @section Scripts {
+
     <script>
+
         (function () {
-            const toggle = document.getElementById('filterToggle');
-            const adv = document.getElementById('advancedFilters');
-            const searchForm = document.getElementById('searchForm');
 
-            if (toggle && adv) {
-                toggle.addEventListener('click', function () {
-                    adv.style.display = (adv.style.display === 'block') ? 'none' : 'block';
+            const toggle = document.getElementById("filterToggle");
+            const filters = document.getElementById("advancedFilters");
+
+            if (toggle && filters) {
+
+                toggle.addEventListener("click", () => {
+
+                    filters.style.display =
+                        filters.style.display === "block"
+                        ? "none"
+                        : "block";
+
                 });
+
             }
 
-            // Ensure the single search box works even if JS is slow:
-            // copy the q value into the three klant fields just before submit.
-            if (searchForm) {
-                searchForm.addEventListener('submit', function (e) {
-                    const q = document.getElementById('q')?.value ?? '';
-                    document.getElementById('klantNaam').value = q;
-                    document.getElementById('klantEmail').value = q;
-                    document.getElementById('klantTelefoon').value = q;
-                    // allow submission
-                });
+            const params = new URLSearchParams(window.location.search);
+
+            if (params.get("bestelDatum") || params.get("bestelStatus")) {
+                filters.style.display = "block";
             }
 
-            // auto-open filters if date/status present in querystring
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('bestelDatum') || urlParams.get('bestelStatus')) {
-                adv.style.display = 'block';
-            }
         })();
+
     </script>
+
 }
 
 <script src="~/js/searchbar.js" asp-append-version="true"></script>
-

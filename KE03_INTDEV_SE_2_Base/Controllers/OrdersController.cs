@@ -1,8 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
 using DataAccessLayer.Models;
 using DataAccessLayer.Repositories;
-using System;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace KE03_INTDEV_SE_2_Base.Controllers
 {
@@ -15,7 +13,6 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
             _repository = repository;
         }
 
-        // GET: ORDERS
         public async Task<IActionResult> Index(
             string? q,
             string? klantNaam,
@@ -24,103 +21,155 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
             DateTime? bestelDatum,
             string? bestelStatus)
         {
-            // If a single search box 'q' is used, search it against name/email/phone
             if (!string.IsNullOrWhiteSpace(q))
             {
-                klantNaam = klantNaam ?? q;
-                klantEmail = klantEmail ?? q;
-                klantTelefoon = klantTelefoon ?? q;
+                klantNaam ??= q;
+                klantEmail ??= q;
+                klantTelefoon ??= q;
             }
 
-            var list = await _repository.GetFilteredAsync(klantNaam, klantEmail, klantTelefoon, bestelDatum, bestelStatus);
+            var list = await _repository.GetFilteredAsync(
+                klantNaam,
+                klantEmail,
+                klantTelefoon,
+                bestelDatum,
+                bestelStatus);
+
             return View("~/Views/Order/Index.cshtml", list);
         }
 
-        // GET: ORDERS/Details/5    
         public async Task<IActionResult> Details(int? orderid)
         {
-            if (orderid == null) return NotFound();
+            if (orderid == null)
+                return NotFound();
 
             var order = await _repository.GetByIdAsync(orderid.Value);
-            if (order == null) return NotFound();
+
+            if (order == null)
+                return NotFound();
 
             return View("~/Views/Order/Details.cshtml", order);
         }
 
-        // GET: ORDERS/Create
         public IActionResult Create()
         {
             return View("~/Views/Order/Create.cshtml");
         }
 
-        // POST: ORDERS/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Klant,Producten,BestelDatum,BestelStatus")] Order order)
+        public async Task<IActionResult> Create(Order order)
         {
-            try
-            {
-                await _repository.AddAsync(order);
-                return RedirectToAction(nameof(Index));
-            }
-            catch (Exception ex)
-            {
-                // Log the exception (ex) here using your preferred logging framework
-                ModelState.AddModelError("", "Er is een fout opgetreden tijdens het aanmaken van de bestelling. Probeer het alstublieft later opnieuw.");
-                return View("~/Views/Order/Create.cshtml", order);
-            }
+            await _repository.AddAsync(order);
+            return RedirectToAction(nameof(Index));
         }
 
-        // GET: ORDERS/Edit/5
         public async Task<IActionResult> Edit(int? orderid)
         {
-            if (orderid == null) return NotFound();
+            if (orderid == null)
+                return NotFound();
 
             var order = await _repository.GetByIdAsync(orderid.Value);
-            if (order == null) return NotFound();
+
+            if (order == null)
+                return NotFound();
 
             return View("~/Views/Order/Edit.cshtml", order);
         }
 
-        // POST: ORDERS/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? orderid, [Bind("Id,Klant,Producten,BestelDatum,BestelStatus")] Order order)
+        public async Task<IActionResult> Edit(int orderid, Order order)
         {
-            if (orderid != order.Id) return NotFound();
+            if (orderid != order.Id)
+                return NotFound();
 
-            try
-            {
-                await _repository.UpdateAsync(order);
-                return RedirectToAction(nameof(Index));
-            }
-            catch (Exception ex)
-            {
-                // Log the exception (ex) here using your preferred logging framework
-                ModelState.AddModelError("", "Er is een fout opgetreden tijdens het bijwerken van de bestelling. Probeer het alstublieft later opnieuw.");
-                return View("~/Views/Order/Edit.cshtml", order);
-            }
+            await _repository.UpdateAsync(order);
+
+            return RedirectToAction(nameof(Index));
         }
 
-        // GET: ORDERS/Delete/5
         public async Task<IActionResult> Delete(int? orderid)
         {
-            if (orderid == null) return NotFound();
+            if (orderid == null)
+                return NotFound();
 
             var order = await _repository.GetByIdAsync(orderid.Value);
-            if (order == null) return NotFound();
+
+            if (order == null)
+                return NotFound();
 
             return View("~/Views/Order/Delete.cshtml", order);
         }
 
-        // POST: ORDERS/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int? orderid)
+        public async Task<IActionResult> DeleteConfirmed(int orderid)
         {
-            if (orderid == null) return NotFound();
-            await _repository.DeleteAsync(orderid.Value);
+            await _repository.DeleteAsync(orderid);
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> StartPicking(int orderid)
+        {
+            await _repository.UpdateStatusAsync(orderid, "Bestelling wordt gepicked");
+            return RedirectToAction(nameof(Details), new { orderid });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> FinishPicking(
+            int orderid,
+            List<int> pickedProductIds,
+            string actie,
+            string? reden)
+        {
+            if (actie == "klaar")
+            {
+                await _repository.UpdateStatusAsync(orderid, "Klaar voor verzending");
+                return RedirectToAction(nameof(CreateShipment), new { orderid });
+            }
+
+            if (actie == "vertragen")
+            {
+                await _repository.UpdateStatusAsync(orderid, "Vertraagd");
+            }
+
+            if (actie == "verzenden-met-opmerking")
+            {
+                await _repository.UpdateStatusAsync(orderid, "Klaar voor verzending");
+                return RedirectToAction(nameof(CreateShipment), new { orderid });
+            }
+
+            return RedirectToAction(nameof(Details), new { orderid });
+        }
+
+        public async Task<IActionResult> CreateShipment(int orderid)
+        {
+            var model = await _repository.GetShipmentModelAsync(orderid);
+
+            if (model == null)
+                return NotFound();
+
+            return View("~/Views/Order/CreateShipment.cshtml", model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateShipment(SendOrder model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.Bezorgers = await _repository.GetBezorgersAsync();
+
+                return View("~/Views/Order/CreateShipment.cshtml", model);
+            }
+
+            await _repository.CreateShipmentAsync(model);
+
+            return RedirectToAction(nameof(Details), new { orderid = model.BestellingId });
         }
     }
 }

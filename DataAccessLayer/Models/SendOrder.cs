@@ -27,16 +27,17 @@ namespace DataAccessLayer.Models
         [Required(ErrorMessage = "Vul een leverdatum in.")]
         public DateTime LeverDatum { get; set; } = DateTime.Today;
 
-        [Required(ErrorMessage = "Vul een levertijd in.")]
+        [Required(ErrorMessage = "Vul een geschatte levertijd in.")]
         public TimeSpan LeverTijd { get; set; }
 
-        public int Status { get; set; } = 1;
+        public string BezorgStatus { get; set; } = "";
 
         [Required(ErrorMessage = "Vul een track & trace code in.")]
         public string TrackTraceCode { get; set; } = string.Empty;
 
         public List<BezorgerOption> Bezorgers { get; set; } = new();
         public List<BezorgStatusOption> Statussen { get; set; } = new();
+        public List<DeliveryPlanningItem> Planning { get; set; } = new();
     }
 
     public class BezorgerOption
@@ -49,5 +50,17 @@ namespace DataAccessLayer.Models
     {
         public int Id { get; set; }
         public string Naam { get; set; } = string.Empty;
+    }
+
+    public class DeliveryPlanningItem
+    {
+        public int BestellingId { get; set; }
+        public DateTime LeverDatum { get; set; }
+        public TimeSpan LeverTijd { get; set; }
+        public string KlantNaam { get; set; } = string.Empty;
+        public string Adres { get; set; } = string.Empty;
+        public string Postcode { get; set; } = string.Empty;
+        public string Woonplaats { get; set; } = string.Empty;
+        public string Status { get; set; } = string.Empty;
     }
 }

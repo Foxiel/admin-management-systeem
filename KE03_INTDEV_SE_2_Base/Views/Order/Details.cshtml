@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Details";
+    var status = Model.BestelStatus?.ToLower() ?? "";
+    var isPicking = status == "bestelling wordt gepicked";
 }
 
 <div class="crud-container product-page">
@@ -13,65 +15,182 @@
             <h4>Bestelling</h4>
         </div>
     </div>
+
     <hr />
+
     <dl class="row">
-        <dt class = "col-sm-2">Order ID</dt>
-        <dd class = "col-sm-10">@Model.Id</dd>
+        <dt class="col-sm-2">Order ID</dt>
+        <dd class="col-sm-10">@Model.Id</dd>
 
-        <dt class = "col-sm-2">Klant naam</dt>
-        <dd class = "col-sm-10">@Model.Klant?.Naam</dd>
+        <dt class="col-sm-2">Klant naam</dt>
+        <dd class="col-sm-10">@Model.Klant?.Naam</dd>
 
-        <dt class = "col-sm-2">Klant email</dt>
-        <dd class = "col-sm-10">@Model.Klant?.Email</dd>
+        <dt class="col-sm-2">Klant email</dt>
+        <dd class="col-sm-10">@Model.Klant?.Email</dd>
 
-        <dt class = "col-sm-2">Klant telefoon</dt>
-        <dd class = "col-sm-10">@Model.Klant?.Telefoonnr</dd>
+        <dt class="col-sm-2">Klant telefoon</dt>
+        <dd class="col-sm-10">@Model.Klant?.Telefoonnr</dd>
 
-        <dt class = "col-sm-2">Aantal producten</dt>
-        <dd class = "col-sm-10">@Model.Producten?.Count ?? 0</dd>
+        <dt class="col-sm-2">Aantal producten</dt>
+        <dd class="col-sm-10">@(Model.Producten?.Count ?? 0)</dd>
 
         <dt class="col-sm-2">Besteldatum</dt>
-        <dd class="col-sm-10">@Model.BestelDatum.ToString("yyyy-MM-dd")</dd>
+        <dd class="col-sm-10">
+            @(Model.BestelDatum == DateTime.MinValue ? "" : Model.BestelDatum.ToString("yyyy-MM-dd"))
+        </dd>
 
         <dt class="col-sm-2">Bestelstatus</dt>
-        <dd class="col-sm-10">@Model.BestelStatus</dd>
+        <dd class="col-sm-10">
+            <strong>@Model.BestelStatus</strong>
+        </dd>
     </dl>
+
+    <div class="mt-3 d-flex justify-content-start align-items-center gap-2">
+        @if (!isPicking)
+        {
+            <form asp-action="StartPicking" asp-route-orderid="@Model.Id" method="post">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="details-link">
+                    Start order picking
+                </button>
+            </form>
+        }
+
+        <a asp-action="Edit" asp-route-orderid="@Model.Id" class="details-link">
+            Bewerken
+        </a>
+
+        <a asp-action="Index" class="details-link ms-2">
+            Terug
+        </a>
+    </div>
 
     @if (Model.Producten != null && Model.Producten.Any())
     {
         <hr />
+
         <h4 class="crud-subtitle">Producten in deze bestelling</h4>
 
-        <div class="table-wrapper">
-            <table class="table table-sm">
-                <thead>
-                    <tr>
-                        <th>EAN</th>
-                        <th>Naam</th>
-                        <th style="width:120px">Prijs</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var p in Model.Producten)
-                    {
+        <form asp-action="FinishPicking" asp-route-orderid="@Model.Id" method="post" id="pickingForm">
+            @Html.AntiForgeryToken()
+
+            <div class="table-wrapper">
+                <table class="table table-sm">
+                    <thead>
                         <tr>
-                            <td class="truncate">@p.EAN</td>
-                            <td class="truncate">@p.Naam</td>
-                            <td>@p.Prijs.ToString("C")</td>
+                            <th style="width:70px;">Gepickt</th>
+                            <th>EAN</th>
+                            <th>Naam</th>
+                            <th>Locatie</th>
+                            <th style="width:120px;">Voorraad</th>
+                            <th>Status</th>
+                            <th style="width:120px;">Prijs</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var p in Model.Producten)
+                        {
+                            <tr>
+                                <td>
+                                    <input type="checkbox"
+                                           class="pick-checkbox"
+                                           name="pickedProductIds"
+                                           value="@p.ProductId"
+                                    @(isPicking ? "" : "disabled") />
+                                </td>
+
+                                <td class="truncate">@p.EAN</td>
+                                <td class="truncate">@p.Naam</td>
+                                <td class="truncate">@(p.Locatie?.Naam ?? "-")</td>
+                                <td>@p.HuidigeVoorraad</td>
+                                <td>@p.Status</td>
+                                <td>@p.Prijs.ToString("C")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mt-3">
+                <label class="form-label">
+                    Reden als de bestelling niet volledig is
+                </label>
+
+                <textarea class="form-control"
+                          id="reden"
+                          name="reden"
+                          rows="3"
+                          placeholder="Bijvoorbeeld: product niet op voorraad, beschadigd product, verkeerde locatie..."
+                          disabled></textarea>
+            </div>
+
+            <div class="mt-3 d-flex justify-content-start align-items-center gap-2">
+                <button type="submit"
+                        name="actie"
+                        value="klaar"
+                        id="klaarButton"
+                        class="details-link"
+                        disabled>
+                    Klaar voor verzending
+                </button>
+
+                <button type="submit"
+                        name="actie"
+                        value="vertragen"
+                        id="vertraagButton"
+                        class="details-link"
+                        disabled>
+                    Vertraag bestelling
+                </button>
+
+                <button type="submit"
+                        name="actie"
+                        value="verzenden-met-opmerking"
+                        id="verzendenMetRedenButton"
+                        class="details-link"
+                        disabled>
+                    Verzenden met reden
+                </button>
+            </div>
+        </form>
     }
     else
     {
         <hr />
         <p>Geen producten gevonden voor deze bestelling.</p>
     }
-
-    <div class="mt-3 d-flex justify-content-start align-items-center gap-2">
-        <a asp-action="Edit" asp-route-orderid="@Model.Id" class="details-link">Bewerken</a>
-        <a asp-action="Index" class="details-link ms-2">Terug</a>
-    </div>
 </div>
+
+@section Scripts {
+    <script>
+        (function () {
+            const checkboxes = document.querySelectorAll(".pick-checkbox");
+            const klaarButton = document.getElementById("klaarButton");
+            const vertraagButton = document.getElementById("vertraagButton");
+            const verzendenMetRedenButton = document.getElementById("verzendenMetRedenButton");
+            const reden = document.getElementById("reden");
+
+            function updateButtons() {
+                const total = checkboxes.length;
+                const checked = document.querySelectorAll(".pick-checkbox:checked").length;
+
+                const allChecked = total > 0 && checked === total;
+                const noneChecked = checked === 0;
+                const partiallyChecked = checked > 0 && checked < total;
+
+                klaarButton.disabled = !allChecked;
+                vertraagButton.disabled = noneChecked;
+                verzendenMetRedenButton.disabled = !partiallyChecked;
+
+                reden.disabled = allChecked || noneChecked;
+            }
+
+            checkboxes.forEach(cb => {
+                cb.addEventListener("change", updateButtons);
+            });
+
+            updateButtons();
+        })();
+    </script>
+}
