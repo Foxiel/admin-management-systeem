@@ -133,7 +133,3 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
-
-function onMedewerkerClick() {
-    alert("Onder constructie");
-}
