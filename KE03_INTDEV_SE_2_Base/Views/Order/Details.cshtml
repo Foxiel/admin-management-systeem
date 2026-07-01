@@ -30,6 +30,9 @@
 
         <dt class="col-sm-2">Klant telefoon</dt>
         <dd class="col-sm-10">@Model.Klant?.Telefoonnr</dd>
+        
+        <dt class="col-sm-2">Klant adres</dt>
+        <dd class="col-sm-10">@Model.Klant?.Adres, @Model.Klant?.Postcode, @Model.Klant?.Woonplaats, @Model.Klant?.Land</dd>
 
         <dt class="col-sm-2">Aantal producten</dt>
         <dd class="col-sm-10">@(Model.Producten?.Count ?? 0)</dd>
@@ -193,4 +196,4 @@
             updateButtons();
         })();
     </script>
-}
+};

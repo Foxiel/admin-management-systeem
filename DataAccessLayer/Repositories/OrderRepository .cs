@@ -20,6 +20,10 @@ SELECT
     b.order_status,
     k.naam,
     k.telefoon,
+    k.adres,
+    k.postcode,
+    k.woonplaats,
+    k.land,
     e.email
 FROM Bestelling b
 LEFT JOIN Klant k ON b.klant_id = k.klant_id
@@ -97,6 +101,10 @@ ORDER BY
                     {
                         Id = ReadInt32Safe(reader, "klant_id"),
                         Naam = ReadStringSafe(reader, "naam"),
+                        Adres = ReadStringSafe(reader, "adres"),
+                        Postcode = ReadStringSafe(reader, "postcode"),
+                        Woonplaats = ReadStringSafe(reader, "woonplaats"),
+                        Land = ReadStringSafe(reader, "land"),
                         Telefoonnr = ReadStringSafe(reader, "telefoon"),
                         Email = ReadStringSafe(reader, "email")
                     },
@@ -125,6 +133,10 @@ SELECT
     b.order_status,
     k.naam,
     k.telefoon,
+    k.adres,
+    k.postcode,
+    k.woonplaats,
+    k.land,
     e.email
 FROM Bestelling b
 LEFT JOIN Klant k ON b.klant_id = k.klant_id
@@ -154,6 +166,10 @@ WHERE b.bestelling_id = @Id";
                         Id = ReadInt32Safe(reader, "klant_id"),
                         Naam = ReadStringSafe(reader, "naam"),
                         Telefoonnr = ReadStringSafe(reader, "telefoon"),
+                        Adres = ReadStringSafe(reader, "adres"),
+                        Postcode = ReadStringSafe(reader, "postcode"),
+                        Woonplaats = ReadStringSafe(reader, "woonplaats"),
+                        Land = ReadStringSafe(reader, "land"),
                         Email = ReadStringSafe(reader, "email")
                     },
                     Bestelregels = new List<OrderItem>(),
