@@ -71,6 +71,7 @@ ORDER BY
         ELSE 7
     END,
     b.order_datum DESC,
+    bestelling_id DESC,
     k.naam ASC";
 
             await using var connection = (SqlConnection)GetConnection();
